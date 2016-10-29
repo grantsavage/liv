@@ -117,9 +117,13 @@
 
         @yield('content')
     </div>
-
+    {{csrf_field()}}
     <!-- Scripts -->
     <script src="/js/app.js"></script>
-    <script>$("input:first").focus();</script>
+    <script>
+        $(function() {
+            $("input").focus();
+        });
+    </script>
 </body>
 </html>

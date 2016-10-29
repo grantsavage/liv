@@ -45,7 +45,7 @@
                 </a>
 
                 <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                    {{$root.csrfToken}}
+                    <input type="hidden" name="_token" :value="$root.csrfToken">
                 </form>
             </li>
         </ul>

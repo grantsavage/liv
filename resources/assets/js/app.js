@@ -30,6 +30,4 @@ const app = new Vue({
 $(function () {
     $('#welcome').removeClass('hidden');
     $('#welcome').addClass('animated fadeIn');
-
-    $("input:first").focus();
 });
