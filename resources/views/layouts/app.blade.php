@@ -58,58 +58,6 @@
                         </ul>
                         @else
                         <nav-bar-notifications :user="{{json_encode(Auth::user())}}"></nav-bar-notifications>
-                        <!--<ul class="nav navbar-nav navbar-right">
-                            <li>
-                                
-                                <a href="url('/user/' . Auth::user()->username)}}">
-                                <img class="img-rounded" src="=Auth::user()->avatar}}" alt="" width="25" height="25">
-                                 Auth::user()->name }}</a>
-                            </li>
-                            <li><a href="url('/home')}}">Home</a></li>
-
-                            <li>
-                                <a href="#">
-                                    <span class="glyphicon glyphicon-user"></span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#">
-                                    <span class="glyphicon glyphicon-comment"></span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#">
-                                    <span class="glyphicon glyphicon-globe"></span>
-                                    <span class="badge" style="margin-bottom: 4px; background-color: #d9534f; padding-top: 1px;">4</span>
-                                </a>
-
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="url('/user/' . Auth::user()->username)}}">Profile</a></li>
-                                    <li><a href="url('/profile/edit')}}">Edit Profile</a></li>
-                                    <li><a href="#">Settings</a></li>
-                                    <li>
-                                        <a href=" url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action=" url('/logout') }}" method="POST" style="display: none;">
-                                             csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>-->
                         @endif
                 </div>
             </div>
@@ -117,7 +65,6 @@
 
         @yield('content')
     </div>
-    {{csrf_field()}}
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script>
