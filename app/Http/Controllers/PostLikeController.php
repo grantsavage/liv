@@ -9,10 +9,12 @@ use App\Http\Requests;
 
 class PostLikeController extends Controller
 {	
+    // Protect the page
 	public function __construct() {
 		$this->middleware(['auth']);
 	}
 
+    // Store the like
     public function store(Request $request, Post $post) {
     	$this->authorize('like',$post);
     	
@@ -20,12 +22,15 @@ class PostLikeController extends Controller
     		'user_id' => $request->user()->id
     	]);
 
+        // If the like already exists, return a conflict code
     	if ($like->exists) {
     		return response(null, 409);
     	}
 
+        // Save like
     	$like->save();
 
+        //Broadcast like to user
         broadcast(new PostWasLiked($post, $request->user()))->toOthers();
 
     	return response(null,200);

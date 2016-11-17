@@ -2,9 +2,13 @@
 	<form action="#" class="form-vertical" @submit.prevent="post">
 		<div class="form-group">
 			<textarea class="form-control" cols="30" rows="3" placeholder="What's going on?" v-model="body"></textarea>
-
 		</div>
 		<button id="submitButton" type="submit" class="btn btn-primary">Post it!</button>
+		<div class="progress hidden">
+	        <div id="progressbar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+	            <span class="sr-only">0% Complete</span>
+	        </div>  
+	    </div>
 	</form>
 </template>
 
@@ -19,13 +23,34 @@
 
 		methods: {
 			post() {
+				// Change UI to loading state
+				$("#submitButton").text("Posting...").addClass("disabled").blur();
+				$(".progress").removeClass("hidden");
+				$("#progressbar").animate({
+				    width: "50%"
+				}, 100);
+				// Post the request
 				this.$http.post('/posts', {
 					body: this.body
 				}).then((response) => {
 					// emit event
-					eventHub.$emit('post-added', response.body)
-					this.body = null
-					$("#submitButton").blur();
+					eventHub.$emit('post-added', response.body);
+
+					this.body = null;
+					// Animate progress
+					$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-success");
+					$("#submitButton").removeClass("disabled").text("Post").blur();
+
+					setTimeout(function(){
+						// Fade out bar
+						$(".progress").addClass("animated fadeOut");
+						// Reset Progress
+						setTimeout(function() {
+							$(".progress").addClass("hidden");
+							$("#progressbar").css("width","0%").removeClass("progress-bar-success");
+							$(".progress").removeClass("animated fadeOut");
+						},1000);
+					},300);
 				})
 			}
 		}
@@ -35,5 +60,10 @@
 <style scoped>
 	textarea {
 		resize: none;
+	}
+
+	.progress.active .progress-bar {
+	    -webkit-transition: none !important;
+	    transition: none !important;
 	}
 </style>

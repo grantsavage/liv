@@ -67,10 +67,5 @@
     </div>
     <!-- Scripts -->
     <script src="/js/app.js"></script>
-    <script>
-        $(function() {
-            $("input").focus();
-        });
-    </script>
 </body>
 </html>

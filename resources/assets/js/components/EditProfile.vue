@@ -20,7 +20,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-8">
-									<button id="submitButton" type="submit" class="btn btn-primary">Save</button>
+									<button :class="{disabled: posting}" id="submitButton" type="submit" class="btn btn-primary">{{ this.buttonText }}</button>
 								</div>
 							</div>
 						</form>
@@ -36,7 +36,9 @@
 		data(){
 			return {
 				name: this.user.name,
-				email: this.user.email
+				email: this.user.email,
+				buttonText: "Save",
+				posting: false
 			}
 		},
 		props: [
@@ -44,23 +46,22 @@
 		],
 		methods: {
 			update(){
-				$("#submitButton").text("...").addClass("disabled");
-				//$("#submitButton .swal").blur();
+				this.posting = true;
+				this.buttonText = "Saving...";
 				this.$http.post('/profile/edit', {
 					name: this.name,
 					email: this.email
 				},{timeout: 5000}).then((response) => {
-					if (response.status === 200) {
-						swal({title:"Profile Updated", text:"Your profile has been updated successfully.", type:"success",timer: 3000,showCloseButton: false,showConfirmButton: false});
-						$("#submitButton").text("Save").removeClass("disabled");
-					} else {
-						swal({title: "Whoops...", text: "There was a problem updating your profile. Try again later...", type: "error"});
-						//$(".swal").blur();
-					}
+					swal({title:"Profile Updated", text:"Your profile has been updated successfully.", type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
+					$("#nav-name").text(this.name);
+					this.posting = false;
+					this.buttonText = "Save";
 				}, (response) => {
 					swal({title: "Whoops...", text: "There was a problem updating your profile. Try again later...", type: "error"});
-						//$("#submitButton").blur();
+					this.posting = false;
+					this.buttonText = "Save";
 				});
+				$("#submitButton").blur();
 			}
 		}
 	}

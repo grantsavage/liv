@@ -1,7 +1,7 @@
 <template>
 <ul class="nav navbar-nav navbar-right">
     <li> 
-        <a :href="'/user/' + this.user.username">
+        <a id="nav-name" :href="'/user/' + this.user.username">
         <img class="img-rounded" :src="this.user.avatar" alt="" width="25" height="25">
         {{ this.user.name }}</a>
     </li>

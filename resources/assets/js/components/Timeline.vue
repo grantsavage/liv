@@ -4,11 +4,11 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Timeline</div>
-
-                    <div class="panel-body">
-                        <post-form></post-form>
-                        <hr>
-                        <post v-for="post in posts" :post="post"></post>
+                        <div class="panel-body">
+                            <post-form></post-form>
+                            <hr>
+                            <post v-for="post in posts" :post="post"></post>
+                        </div>
                     </div>
                 </div>
             </div>

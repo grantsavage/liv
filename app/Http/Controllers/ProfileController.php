@@ -11,6 +11,7 @@ use App\Http\Requests;
 
 class ProfileController extends Controller
 {
+    // Protect the page
     public function __construct(){
     	$this->middleware(['auth']);
     }
@@ -39,10 +40,12 @@ class ProfileController extends Controller
         }
     }
 
+    // Load the edit view with the current user
     public function edit(){
     	return view('profile.edit')->with('user',Auth::user());
     }
 
+    // Update user's information from request
     public function update(Request $request){
     	$this->validate($request,[
     		'name' => 'required|max:100',

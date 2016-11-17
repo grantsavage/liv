@@ -8883,8 +8883,7 @@ body.stop-scrolling {
     -webkit-transform: translateY(145%);
     transform: translateY(145%); } }
 
-/* Prevents blue border forming around focused elements
-button:focus, a:focus, div:focus {
+/*button:select, a:select, div:select, button:focus a:focus, div:focus {
 	outline: none;
     outline-width: 0px;
 }*/
