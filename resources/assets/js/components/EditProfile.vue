@@ -9,13 +9,19 @@
 							<div class="form-group">	
 								<div class="col-sm-8">
 									<label for="name" class="control-label">Name</label>
-									<input type="text" class="form-control" name="name" id="name" placeholder="Name"  v-model="name">
+									<input type="text" class="form-control" name="name" id="name" placeholder="John Doe"  v-model="name">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-8">
-									<label for="email" class="control-label">Email</label>
-									<input type="email" class="form-control" name="email" id="email" placeholder="Email" v-model="email">
+									<label for="location" class="control-label">Location</label>
+									<input type="text" class="form-control" name="location" id="location" placeholder="Los Angeles, California" v-model="location">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8">
+									<label for="bio" class="control-label">Bio</label>
+									<input type="text" class="form-control" name="bio" id="bio" placeholder="I like to..." v-model="bio">
 								</div>
 							</div>
 							<div class="form-group">
@@ -36,7 +42,8 @@
 		data(){
 			return {
 				name: this.user.name,
-				email: this.user.email,
+				location: this.user.location,
+				bio: this.user.bio,
 				buttonText: "Save",
 				posting: false
 			}
@@ -50,10 +57,15 @@
 				this.buttonText = "Saving...";
 				this.$http.post('/profile/edit', {
 					name: this.name,
-					email: this.email
+					location: this.location,
+					bio: this.bio
 				},{timeout: 5000}).then((response) => {
-					swal({title:"Profile Updated", text:"Your profile has been updated successfully.", type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
-					$("#nav-name").text(this.name);
+					if (response.status == 200) {
+						swal({title:"Profile Updated", text:"Your profile has been updated successfully.", type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
+						$("#nav-name").text(this.name);
+					} else {
+						swal({title: "Whoops...", text: "There was a problem updating your profile. Try again later...", type: "error"});
+					}
 					this.posting = false;
 					this.buttonText = "Save";
 				}, (response) => {

@@ -33,3 +33,7 @@ Route::post('/posts/{post}/likes', "PostLikeController@store");
 Route::get('/user/{username}', "ProfileController@getProfile");
 Route::get('/profile/edit', 'ProfileController@edit');
 Route::post('/profile/edit', 'ProfileController@update');
+
+// Notification Routes
+Route::get('/notifications', "NotificationController@getUserUnreadNotifications");
+Route::get('/notifications/clear', "NotificationController@setNotificationsAsRead");

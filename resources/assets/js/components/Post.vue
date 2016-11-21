@@ -7,7 +7,7 @@
 			</a>
 		</div>
 		<div class="media-body">
-			<strong>{{ post.user.name }}</strong>
+			<a :href="'/user/' + post.user.username"><strong>{{ post.user.name }}</strong></a>
 			<p>{{ post.body }}</p>
 			<p><like-button :post="post" v-if="post.likedByCurrentUser === false && post.user.id !== $root.user.id"></like-button>{{ post.likeCount }} {{ pluralize('like', post.likeCount) }}</p>
 		</div>

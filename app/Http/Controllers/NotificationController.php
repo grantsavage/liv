@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Auth;
+use App\Http\Requests;
+
+class NotificationController extends Controller
+{
+	// Protect the page
+    public function __construct(){
+    	$this->middleware(['auth']);
+    }
+
+    public function getUserUnreadNotifications(Request $request) {
+		if ($request->wantsJson()) {
+			return Auth::user()->unreadNotifications;
+		} else {
+			return "hello";
+		}
+    }
+
+    public function setNotificationsAsRead() {
+    	if (Auth::check()) {
+    		foreach (Auth::user()->unreadNotifications as $notification) {
+    			$notification->markAsRead();
+    		}
+    		return response(null,200);
+    	} else {
+    		return response(null, 403);
+    	}
+    }
+}

@@ -1,9 +1,9 @@
 <template>
 <ul class="nav navbar-nav navbar-right">
     <li> 
-        <a id="nav-name" :href="'/user/' + this.user.username">
+        <a :href="'/user/' + this.user.username">
         <img class="img-rounded" :src="this.user.avatar" alt="" width="25" height="25">
-        {{ this.user.name }}</a>
+        <span id="nav-name">{{ this.user.name }}</span></a>
     </li>
     <li><a href="/home">Home</a></li>
 
@@ -20,12 +20,20 @@
         </a>
     </li>
 
-    <li>
-        <a href="#">
+    <li class="dropdown"  @click="clear">
+        <a href="#" id="notifications" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <span class="glyphicon glyphicon-globe"></span>
-            <span class="badge" style="margin-bottom: 4px; background-color: #d9534f; padding-top: 1px;">4</span>
+            <span v-if="noti_count > 0" id="noti-badge" class="badge" style="margin-bottom: 4px; background-color: #d9534f; padding-top: 1px;">{{this.noti_count}}</span>
         </a>
+        
+         <ul class="dropdown-menu notifications" role="menu" aria-labelledby="notifications">
+            <li v-if="notifications.length <= 0" class="dropdown-header text-center">No Notifications!</li>
+            <li v-else class="dropdown-header text-center">Notifications</li>
+            <li v-for="notification in notifications">
+                <a href=""><img :src="'/' + notification.data.user.avatar" alt="" width="35" height="35"> {{notification.data.user.name}} liked your post.</a>
+            </li>
 
+        </ul>
     </li>
 
     <li class="dropdown">
@@ -57,15 +65,25 @@
 	export default {
 		data() {
 			return {
-
+                notifications: [],
+                noti_count: 0
 			}
 		},
 		props: ['user'],
-		methods() {
-
+		methods: {
+            clear() {
+                this.noti_count = 0;
+                this.$http.get('/notifications/clear');
+            }
 		},
 		mounted() {
-			
+			this.$http.get('/notifications').then((response) => {
+                this.notifications = response.body;
+                this.noti_count = this.notifications.length;
+            });
+            this.$on("change_nav_name",function(name) {
+                this.user.name = name;
+            });
 		}
 	}
 </script>

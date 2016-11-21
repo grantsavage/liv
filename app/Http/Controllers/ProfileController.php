@@ -49,12 +49,14 @@ class ProfileController extends Controller
     public function update(Request $request){
     	$this->validate($request,[
     		'name' => 'required|max:100',
-    		'email' => 'required|email'
+            'location' => 'max:100',
+            'bio' => 'max:250'
     	]);
 
     	Auth::user()->update([
     		'name' => $request->name,
-    		'email' => $request->email
+            'location' => $request->location,
+            'bio' => $request->bio
     	]);
     }
 }

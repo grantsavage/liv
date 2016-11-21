@@ -7,6 +7,9 @@
 						<img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128">
 						<h2 style="padding: 20px; display: inline;">{{this.user.name}}</h2>
 						<a v-if="this.user.id == $root.user.id" href="/profile/edit" style="margin: 20px; display: inline;" class="btn btn-primary pull-right">Edit Profile</a>
+						<p class="lead" style="display: inline;">{{this.user.location}}</p>
+						<h4>Bio</h4>
+						<p class="">{{this.user.bio}}</p>
 					</div>
 					<div class="panel-body">
 						<post v-for="post in this.user.posts" :post="post"></post>

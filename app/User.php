@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password',
+        'name', 'username', 'email', 'password', 'location', 'bio'
     ];
 
     /**
@@ -30,10 +30,10 @@ class User extends Authenticatable
     protected $appends = ['avatar'];
 
     public function posts() {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->orderBy('created_at','desc');
     }
 
     public function getAvatarAttribute(){
-        return 'https://www.gravatar.com/avatar/' . md5($this->email) . 'x?s=128&d=mm';
+        return '/images/default.png';
     }
 }

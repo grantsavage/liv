@@ -10,6 +10,7 @@
 		],
 		methods: {
 			like() {
+				//$(this).addClass('hidden');
 				this.$http.post('/posts/'+ this.post.id +'/likes').then((response) => {
 					eventHub.$emit('post-liked', this.post.id, true)
 				});

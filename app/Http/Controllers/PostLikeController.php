@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Events\PostWasLiked;
+use App\Notifications\PostLiked;
 
 use App\Http\Requests;
 
@@ -32,6 +33,7 @@ class PostLikeController extends Controller
 
         //Broadcast like to user
         broadcast(new PostWasLiked($post, $request->user()))->toOthers();
+        $post->user->notify(new PostLiked($post,$request->user()));
 
     	return response(null,200);
     }
