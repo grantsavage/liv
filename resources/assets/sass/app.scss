@@ -10,6 +10,7 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/animate.css/animate";
 @import "node_modules/bootstrap-sweetalert/dist/sweetalert";
+@import "node_modules/spinthatshit/src/loaders";
 
 //Prevents blue border forming around focused elements
 /*button:select, a:select, div:select, button:focus a:focus, div:focus {
@@ -66,4 +67,12 @@
 .dropdown-menu > .notifications {
     width: 300px !important;
     height: 400px !important;
+}
+
+.loader {
+    @include loader01;
+}
+
+a.like-2:select, a:hover, a.like-2:active, a.like-2:link, a.like-2:visited, a:focus {
+    text-decoration: none !important;
 }

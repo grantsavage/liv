@@ -1072,7 +1072,7 @@ a {
   text-decoration: none; }
   a:hover, a:focus {
     color: #216a94;
-    text-decoration: underline; }
+    /*text-decoration: $link-hover-decoration;*/ }
   a:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
@@ -8930,5 +8930,43 @@ body.stop-scrolling {
 .dropdown-menu > .notifications {
   width: 300px !important;
   height: 400px !important; }
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #3097D1;
+  border-right-color: transparent;
+  border-radius: 50%;
+  position: relative;
+  -webkit-animation: loader-rotate 0.5s linear infinite;
+  animation: loader-rotate 0.5s linear infinite; }
+  .loader::after {
+    content: '';
+    width: 2px;
+    height: 2px;
+    background: #3097D1;
+    border-radius: 50%;
+    position: absolute;
+    top: -1px;
+    left: 7px; }
+
+@-webkit-keyframes loader-rotate {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+@keyframes loader-rotate {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+a.like-2:select, a:hover, a.like-2:active, a.like-2:link, a.like-2:visited, a:focus {
+  text-decoration: none !important; }
 
 /*# sourceMappingURL=app.css.map */

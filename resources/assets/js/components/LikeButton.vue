@@ -1,18 +1,27 @@
 <template>
-		<a class="like-2" href="#" @click.prevent="like">Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span></a>
+		<a class="like-2" href="#" @click.prevent="like">{{this.text}}&nbsp;&nbsp;<span :class="{hidden: this.liking}" class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;<div :class="{hidden: !this.liking}" class="loader" style="display: inline-block;"></div></a>
 </template>
 
 <script>
 	import eventHub from '../event'
 	export default {
+		data() {
+			return {
+				liking: false,
+				text: "Like"
+			}
+		},
 		props: [
 			'post'
 		],
 		methods: {
 			like() {
-				//$(this).addClass('hidden');
+				this.liking = true;
+				this.text = "";
 				this.$http.post('/posts/'+ this.post.id +'/likes').then((response) => {
-					eventHub.$emit('post-liked', this.post.id, true)
+					eventHub.$emit('post-liked', this.post.id, true);
+					this.liking = false;
+					this.text = "Like";
 				});
 			}
 		}

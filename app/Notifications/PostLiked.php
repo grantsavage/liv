@@ -45,7 +45,7 @@ class PostLiked extends Notification
     {
         return (new MailMessage)
                     ->line($this->user->name . ' liked your post.')
-                    ->action('Notification Action', 'https://' . url('/home'));
+                    ->action('Notification Action', 'https://' . url('/home'))
                     ->line('Thanks for using Liv.');
     }
 
