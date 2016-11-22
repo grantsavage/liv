@@ -8,7 +8,7 @@ Echo.private('posts').listen('PostWasCreated', (e) => {
     });
 
 Echo.private('likes').listen('PostWasLiked', (e) => {
-    eventHub.$emit('post-liked', e.post.id, false)
+    eventHub.$emit('post-liked', e.post.id, false, e.post)
 });
 
 if (window.Notification && Notification.permission !== 'denied') {

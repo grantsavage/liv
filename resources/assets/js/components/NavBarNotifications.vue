@@ -30,7 +30,7 @@
             <li v-if="notifications.length <= 0" class="dropdown-header text-center">No Notifications!</li>
             <li v-else class="dropdown-header text-center">Notifications</li>
             <li v-for="notification in notifications">
-                <a href=""><img :src="'/' + notification.data.user.avatar" alt="" width="35" height="35"> {{notification.data.user.name}} liked your post.</a>
+                <a href=""><img :src="notification.data.user.avatar" alt="" width="35" height="35"> {{notification.data.user.name}} liked your post.</a>
             </li>
 
         </ul>
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+    import eventHub from '../event.js';
 	export default {
 		data() {
 			return {
@@ -74,6 +75,12 @@
             clear() {
                 this.noti_count = 0;
                 this.$http.get('/notifications/clear');
+            },
+            addNotification(postId, likedByCurrentUser, post) {
+                this.$http.get('/notifications').then((response) => {
+                    this.notifications = response.body;
+                    this.noti_count = this.notifications.length;
+             });
             }
 		},
 		mounted() {
@@ -81,9 +88,7 @@
                 this.notifications = response.body;
                 this.noti_count = this.notifications.length;
             });
-            this.$on("change_nav_name",function(name) {
-                this.user.name = name;
-            });
+            eventHub.$on('post-liked',this.addNotification)
 		}
 	}
 </script>
