@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Mail;
+use App\Mail\NewSignup;
+use Illuminate\Notifications\Messages\MailMessage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -62,7 +65,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        // Create the user
+        $user = User::create([
             'name' => $data['name'],
             'username' => substr($data['email'], 0, strrpos($data['email'], '@')),
             'email' => $data['email'],
@@ -70,5 +74,10 @@ class RegisterController extends Controller
             'location' => "",
             'bio' => ""
         ]);
+        // Mail to user
+        Mail::to($user)->send(new NewSignup($user));
+
+        // Return user
+        return $user;
     }
 }

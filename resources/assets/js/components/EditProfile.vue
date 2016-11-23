@@ -5,6 +5,10 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Profile</div>
 					<div class="panel-body">
+						<img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128">
+						<label for="file" class="btn btn-primary">Upload Profile Picture</label>
+						<input id="file" name="file" type="file" class="hidden">
+						<hr>
 						<form action="#" class="form-horizontal" @submit.prevent="update">
 							<div class="form-group">	
 								<div class="col-sm-8">
@@ -26,7 +30,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-8">
-									<button :class="{disabled: posting}" id="submitButton" type="submit" class="btn btn-primary">{{ this.buttonText }}</button>
+									<button :class="{disabled: posting}" id="submitButton" type="submit" class="btn btn-primary">{{ this.buttonText }}<div :class="{hidden: !this.posting}" class="button-loader" style="display: inline-block;"></div> </button>
 								</div>
 							</div>
 						</form>
@@ -74,6 +78,9 @@
 					this.buttonText = "Save";
 				});
 				$("#submitButton").blur();
+			},
+			uploadProfilePhoto() {
+				
 			}
 		}
 	}

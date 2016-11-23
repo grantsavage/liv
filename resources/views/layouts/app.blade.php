@@ -46,7 +46,16 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if(!Auth::guest())
+                        <form class="navbar-form">
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Search for people..." style="width: 30em">
+                              <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon glyphicon-search"></span></button>
+                              </span>
+                            </div>
+                        </form>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -57,6 +66,7 @@
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         </ul>
                         @else
+
                         <nav-bar-notifications :user="{{json_encode(Auth::user())}}"></nav-bar-notifications>
                         @endif
                 </div>

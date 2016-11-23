@@ -3,7 +3,7 @@
 		<div class="form-group">
 			<textarea class="form-control" cols="30" rows="3" placeholder="What's going on?" v-model="body"></textarea>
 		</div>
-		<button v-bind:class="{disabled: this.body == '' || this.body == null}" id="submitButton" type="submit" class="btn btn-primary">Post it!</button>
+		<button v-bind:class="{disabled: this.body == '' || this.body == null}" id="submitButton" type="submit" class="btn btn-primary">{{this.button_text}}<div class="button-loader hidden" style="display: inline-block;"></div></button>
 		<p id="help" class="text-danger hidden">Your post must have text in it to post</p>
 		<div class="progress hidden">
 	        <div id="progressbar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -18,18 +18,21 @@
 	export default {
 		data () {
 			return {
-				body: null
+				body: null,
+				button_text: "Post it!"
 			}
 		},
 		methods: {
 			post() {
 				$("#submitButton").blur();
 				if (this.body == null || this.body == "") {
-					$("#help").removeClass("hidden");
+					$("#help").removeClass("hidden").addClass("animated flash");
 				} else {
 					// Change UI to loading state
+					$(".button-loader").removeClass("hidden");
 					$("#help").addClass("hidden");
-					$("#submitButton").text("Posting...").addClass("disabled").blur();
+					$("#submitButton").addClass("disabled").blur();
+					this.button_text = "Posting   ";
 					$(".progress").removeClass("hidden");
 					$("#progressbar").animate({
 					    width: "50%"
@@ -44,8 +47,9 @@
 						this.body = null;
 						// Animate progress
 						$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-success");
-						$("#submitButton").removeClass("disabled").text("Post").blur();
-
+						$("#submitButton").removeClass("disabled").blur();
+						this.button_text = "Post it!";
+						$(".button-loader").addClass("hidden");
 						setTimeout(function(){
 							// Fade out bar
 							$(".progress").addClass("animated fadeOut");

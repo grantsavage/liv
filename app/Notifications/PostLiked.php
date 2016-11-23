@@ -32,7 +32,7 @@ class PostLiked extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail','database'];
     }
 
     /**
@@ -44,8 +44,9 @@ class PostLiked extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->user->name . ' liked your post.')
-                    ->action('Notification Action', 'https://liv-social.com')
+                    ->subject("Your Post was Liked!")
+                    ->line($this->user->name . ' liked your post!')
+                    ->action('See ' . $this->user->name . "'s profile", url('/user/' . $this->user->username))
                     ->line('Thanks for using Liv.');
     }
 

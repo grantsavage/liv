@@ -15,6 +15,7 @@
 						<post v-for="post in this.user.posts" :post="post"></post>
 						<p v-if="this.user.posts <= 0">{{this.user.name}} hasn't posted anything yet!</p>
 					</div>
+					
 				</div>
 			</div>
 		</div>

@@ -20,8 +20,8 @@
         </a>
     </li>
 
-    <li class="dropdown"  @click="clear">
-        <a href="#" id="notifications" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <li class="dropdown" id="noti">
+        <a id="notifications" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <span class="glyphicon glyphicon-globe"></span>
             <span v-if="noti_count > 0" id="noti-badge" class="badge" style="margin-bottom: 4px; background-color: #d9534f; padding-top: 1px;">{{this.noti_count}}</span>
         </a>
@@ -71,6 +71,17 @@
 			}
 		},
 		props: ['user'],
+        mounted() {
+            this.$http.get('/notifications').then((response) => {
+                this.notifications = response.body;
+                this.noti_count = this.notifications.length;
+            });
+            eventHub.$on('post-liked',this.addNotification);
+            eventHub.$on('clear',this.clear);
+            $('#noti').on('show.bs.dropdown', function () {
+                eventHub.$emit('clear');
+            });
+        },
 		methods: {
             clear() {
                 this.noti_count = 0;
@@ -80,15 +91,9 @@
                 this.$http.get('/notifications').then((response) => {
                     this.notifications = response.body;
                     this.noti_count = this.notifications.length;
-             });
+                });
             }
-		},
-		mounted() {
-			this.$http.get('/notifications').then((response) => {
-                this.notifications = response.body;
-                this.noti_count = this.notifications.length;
-            });
-            eventHub.$on('post-liked',this.addNotification)
 		}
 	}
+    
 </script>

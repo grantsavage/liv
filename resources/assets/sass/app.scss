@@ -73,6 +73,10 @@
     @include loader01;
 }
 
+.button-loader {
+    @include loader01($color: #ffffff, $size: 12px);
+}
+
 a.like-2:select, a:hover, a.like-2:active, a.like-2:link, a.like-2:visited, a:focus {
     text-decoration: none !important;
 }

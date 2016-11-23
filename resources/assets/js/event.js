@@ -4,11 +4,11 @@ module.exports = eventHub;
 import Push from "push.js";
 
 Echo.private('posts').listen('PostWasCreated', (e) => {
-        eventHub.$emit('post-added', e.post)
-    });
+    eventHub.$emit('post-added', e.post);
+});
 
 Echo.private('likes').listen('PostWasLiked', (e) => {
-    eventHub.$emit('post-liked', e.post.id, false, e.post)
+    eventHub.$emit('post-liked', e.post.id, false, e.post);
 });
 
 if (window.Notification && Notification.permission !== 'denied') {
