@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<div class="row">
+		<div :class="{hidden: searching}" class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Profile</div>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+	import eventHub from "../event.js"
 	export default {
 		data(){
 			return {
@@ -49,7 +50,8 @@
 				location: this.user.location,
 				bio: this.user.bio,
 				buttonText: "Save",
-				posting: false
+				posting: false,
+				searching: false
 			}
 		},
 		props: [
@@ -81,7 +83,17 @@
 			},
 			uploadProfilePhoto() {
 				
+			},
+			hide() {
+				this.searching = true;
+			},
+			show() {
+				this.searching = false;
 			}
+		},
+		mounted(){
+			eventHub.$on("search",this.hide);
+			eventHub.$on("not-searching",this.show);
 		}
 	}
 </script>

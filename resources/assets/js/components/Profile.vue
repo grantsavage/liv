@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<div class="row">
+		<div :class="{hidden: searching}" class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -14,8 +14,7 @@
 					<div class="panel-body">
 						<post v-for="post in this.user.posts" :post="post"></post>
 						<p v-if="this.user.posts <= 0">{{this.user.name}} hasn't posted anything yet!</p>
-					</div>
-					
+					</div>	
 				</div>
 			</div>
 		</div>
@@ -23,7 +22,8 @@
 </template>
 
 <script>
-	import Post from './Post.vue'
+	import Post from './Post.vue';
+	import eventHub from '../event.js';
 	export default {
 		created() {
 			// Get user and user posts
@@ -34,12 +34,25 @@
 		data() {
 			return {
 				user: {},
+				searching: false
 			}
 		},
 		props: ['username'],
 		components: [
 			Post
 		],
+		methods: {
+			hide(){
+				this.searching = true;
+			},
+			show(){
+				this.searching = false;
+			}
+		},
+		mounted(){
+			eventHub.$on('search',this.hide);
+            eventHub.$on('not-searching', this.show);
+		}
 	}
 </script>
 

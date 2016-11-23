@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div :class="{hidden: searching}" class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Timeline</div>
@@ -24,7 +24,8 @@
     export default {
         data() {
             return {
-                posts: []
+                posts: [],
+                searching: false
             }
         },
         methods: {
@@ -43,14 +44,22 @@
                         break;
                     }
                 }
+            },
+            hideTimeline(){
+                this.searching = true;
+            },
+            showTimeline(){
+                this.searching = false;
             }
         },
         components: [
             Post
         ],
         mounted() {
-            eventHub.$on('post-added', this.addPost)
-            eventHub.$on('post-liked', this.likePost)
+            eventHub.$on('post-added', this.addPost);
+            eventHub.$on('post-liked', this.likePost);
+            eventHub.$on('search',this.hideTimeline);
+            eventHub.$on('not-searching', this.showTimeline);
 
             this.$http.get('/posts').then((response) => {
                 this.posts = response.body

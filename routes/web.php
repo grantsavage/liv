@@ -37,3 +37,6 @@ Route::post('/profile/edit', 'ProfileController@update');
 // Notification Routes
 Route::get('/notifications', "NotificationController@getUserUnreadNotifications");
 Route::get('/notifications/clear', "NotificationController@setNotificationsAsRead");
+
+// Search
+Route::get('/search', "SearchController@search");

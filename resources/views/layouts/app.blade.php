@@ -47,14 +47,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if(!Auth::guest())
-                        <form class="navbar-form">
-                            <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Search for people..." style="width: 30em">
-                              <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon glyphicon-search"></span></button>
-                              </span>
-                            </div>
-                        </form>
+                            <search-bar-view></search-bar-view>
                         @endif
                     </ul>
 
@@ -74,6 +67,9 @@
         </nav>
 
         @yield('content')
+        @if(!Auth::guest())
+        <search-results-view></search-results-view>
+        @endif
     </div>
     <!-- Scripts -->
     <script src="/js/app.js"></script>

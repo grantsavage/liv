@@ -22,6 +22,8 @@ Vue.component('like-button', require('./components/LikeButton.vue'));
 Vue.component('edit-profile', require('./components/EditProfile.vue'));
 Vue.component('profile', require('./components/Profile.vue'));
 Vue.component('nav-bar-notifications', require('./components/NavBarNotifications.vue'));
+Vue.component('search-bar-view', require('./components/SearchBarView.vue'));
+Vue.component('search-results-view', require('./components/SearchResultsView.vue'));
 
 const app = new Vue({
     el: '#app',
