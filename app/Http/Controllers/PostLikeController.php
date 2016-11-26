@@ -31,9 +31,11 @@ class PostLikeController extends Controller
         // Save like
     	$like->save();
 
-        //Broadcast like to user
+        // Broadcast like to user
+        if ($post->user->isFriendsWith($request->user())) {
+            $post->user->notify(new PostLiked($post,$request->user()));
+        }
         broadcast(new PostWasLiked($post, $request->user()))->toOthers();
-        $post->user->notify(new PostLiked($post,$request->user()));
 
     	return response(null,200);
     }

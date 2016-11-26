@@ -60,7 +60,7 @@
                         </ul>
                         @else
 
-                        <nav-bar-notifications :user="{{json_encode(Auth::user())}}"></nav-bar-notifications>
+                        <nav-bar-notifications :user="{{ Auth::user() }}" :requests="{{Auth::user()->friendRequests()}}"></nav-bar-notifications>
                         @endif
                 </div>
             </div>

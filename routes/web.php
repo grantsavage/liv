@@ -40,3 +40,10 @@ Route::get('/notifications/clear', "NotificationController@setNotificationsAsRea
 
 // Search
 Route::get('/search', "SearchController@search");
+
+// Friends
+Route::get('/friends', "FriendController@friends");
+Route::get('/friends/add/{username}', "FriendController@getAdd");
+Route::get('/friends/accept/{username}', "FriendController@getAccept");
+Route::get('/friends/decline/{username}', 'FriendController@getDecline');
+Route::post('/friends/delete/{username}', "FriendController@postDelete");

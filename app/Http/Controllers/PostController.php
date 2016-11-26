@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -14,9 +15,12 @@ class PostController extends Controller
     	$this->middleware(['auth']);
     }
 
-    // Return posts to the hoem page
-    public function index(Request $request, Post $post){
-    	return $post->with(['user'])->latestFirst()->get();
+    // Return posts to the home page
+    public function index(){
+        //$post->with(['user'])->latestFirst()->get();
+    	return Post::where(function($query) {
+                return $query->where('user_id', Auth::user()->id)->orWhereIn('user_id', Auth::user()->friends()->pluck('id'));
+            })->with(['user'])->latestFirst()->get();
     }
 
     // Store the submitted post

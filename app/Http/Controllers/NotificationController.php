@@ -14,6 +14,7 @@ class NotificationController extends Controller
     	$this->middleware(['auth']);
     }
 
+    // Return unread notifications
     public function getUserUnreadNotifications(Request $request) {
 		if ($request->wantsJson()) {
 			return Auth::user()->unreadNotifications;
@@ -22,6 +23,7 @@ class NotificationController extends Controller
 		}
     }
 
+    // Set all notifications as read
     public function setNotificationsAsRead() {
     	if (Auth::check()) {
     		foreach (Auth::user()->unreadNotifications as $notification) {

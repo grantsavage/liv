@@ -1,11 +1,12 @@
 <template>
-	<form class="navbar-form" action="/search">
-	    <div class="input-group">
-	      <input type="text" class="form-control" placeholder="Search for people..." style="width: 30em" name="query" v-on:input="fire" v-model="query">
-	      <span class="input-group-btn">
-	            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon glyphicon-search"></span></button>
+	<form class="navbar-form">
+	    <!--<div class="input-group">-->
+	      <input type="text" class="form-control" placeholder="Search for people..." style="width: 20em" name="query" v-on:input="fire" v-model="query">
+	      <!--<span class="input-group-btn">
+	            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 	      </span>
 	    </div>
+	    <input type="text" class="form-control hidden-xs hidden-sm" placeholder="Search for people..." style="width: 30em" name="query" v-on:input="fire" v-model="query">-->
 	</form>
 </template>
 

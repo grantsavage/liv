@@ -36,7 +36,7 @@ class ProfileController extends Controller
             return $user;
         // Load the page markup to the user and pass Vue the user's username
         } else {
-            return view('profile.index')->with('username',json_encode($user->username));
+            return view('profile.index')->with('user',$user);
         }
     }
 

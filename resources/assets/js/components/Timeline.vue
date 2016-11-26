@@ -50,6 +50,11 @@
             },
             showTimeline(){
                 this.searching = false;
+            },
+            reload(){ 
+                this.$http.get('/posts').then((response) => {
+                    this.posts = response.body
+                });
             }
         },
         components: [
@@ -60,10 +65,8 @@
             eventHub.$on('post-liked', this.likePost);
             eventHub.$on('search',this.hideTimeline);
             eventHub.$on('not-searching', this.showTimeline);
-
-            this.$http.get('/posts').then((response) => {
-                this.posts = response.body
-            });
+            eventHub.$on('reload-timeline', this.reload);
+            this.reload();
         }
     }
 </script>
