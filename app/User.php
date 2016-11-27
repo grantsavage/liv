@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'location', 'bio'
+        'name', 'username', 'email', 'password', 'location', 'bio',"avatar_url"
     ];
 
     /**
@@ -34,7 +34,11 @@ class User extends Authenticatable
     }
 
     public function getAvatarAttribute(){
-        return '/images/default.png';
+        if ($this->avatar_url) {
+            return Storage::url($this->avatar_url);
+        } else {
+            return '/images/default.png';
+        }
     }
 
     public function friendsOfMine() {

@@ -5,11 +5,13 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128">
-						<h2 style="padding: 20px; display: inline;">{{this.user.name}}</h2>
-						<a v-if="this.user.id == $root.user.id" href="/profile/edit" style="margin: 20px; display: inline;" class="btn btn-primary pull-right">Edit Profile</a>
-						<p class="lead" style="display: inline;">{{this.user.location}}</p>
-						<div @click="addFriend" :class="{'hidden': isFriend || this.user.id == $root.user.id, 'btn-primary': !requestSent, 'btn-success': requestSent, 'disabled': requestSent}" class="btn btn-primary" style="display: inline;margin-left: 20px;"><span :class="{hidden: requestSent}" class="glyphicon glyphicon-plus"></span>  {{this.buttonText}}</div>
-						<div @click="deleteFriend" class="btn btn-danger" style="display: inline;margin-left: 20px;" :class="{hidden: !isFriend}">Delete Friend</div>
+						<h2 style=" display: inline-block;">{{this.user.name}}</h2>
+						<a v-if="this.user.id == $root.user.id" href="/profile/edit" style="margin: 20px; display: inline-block;" class="btn btn-primary pull-right">Edit Profile</a>
+						<br>
+						<br>
+						<p class="lead" style="display: inline-block;">{{this.user.location}}</p>
+						<div @click="addFriend" :class="{'hidden': isFriend || this.user.id == $root.user.id, 'btn-primary': !requestSent, 'btn-success': requestSent, 'disabled': requestSent}" class="btn btn-primary" style="display: inline-block;margin-left: 20px;"><span :class="{hidden: requestSent}" class="glyphicon glyphicon-plus"></span>  {{this.buttonText}}</div>
+						<div @click="deleteFriend" class="btn btn-danger" style="display: inline-block;margin-left: 20px;" :class="{hidden: !isFriend}">Delete Friend</div>
 						<h4>Bio</h4>
 						<p class="">{{this.user.bio}}</p>
 					</div>

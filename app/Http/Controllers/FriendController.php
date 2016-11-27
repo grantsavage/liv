@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Events\RequestWasSent;
+use App\Notifications\FriendRequestReceived;
 
 use App\Http\Requests;
 
@@ -40,7 +41,9 @@ class FriendController extends Controller
 
 		Auth::user()->addFriend($user);
 
+		// Notify user
 		broadcast(new RequestWasSent(Auth::user(),$user));
+		$user->notify(new FriendRequestReceived(Auth::user()));
 
 		// Return OK
 		return response(null,200);

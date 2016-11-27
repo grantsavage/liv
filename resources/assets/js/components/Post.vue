@@ -9,6 +9,7 @@
 		<div class="media-body">
 			<a :href="'/user/' + post.user.username"><strong>{{ post.user.name }}</strong></a>
 			<p>{{ post.body }}</p>
+			<img :class="{hidden: !post.image_url}" :src="post.image_url" alt="" class="img-responsive" style="max-width: 500px;margin-bottom: 10px;">
 			<p><like-button :post="post" v-if="post.likedByCurrentUser === false && post.user.id !== $root.user.id"></like-button>{{ post.likeCount }} {{ pluralize('like', post.likeCount) }}</p>
 		</div>
 	</div>

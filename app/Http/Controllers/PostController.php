@@ -7,6 +7,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Events\PostWasCreated;
+use Storage;
 
 class PostController extends Controller
 {
@@ -25,13 +26,20 @@ class PostController extends Controller
 
     // Store the submitted post
      public function store(Request $request){
+        $path = null;
+        if ($request->hasFile('image')) {
+            $path = $request->image->store('public/uploads');
+        }
+
+
     	$this->validate($request, [
     		'body' => 'required'
     	]);
 
         // Create the post
     	$post = $request->user()->posts()->create([
-    		'body' => $request->body
+    		'body' => $request->body,
+            'image_url' => Storage::url($path)
     	]);
 
         // Broadcast Notification

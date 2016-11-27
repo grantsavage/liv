@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Storage;
+use Image;
+use File;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
@@ -48,15 +51,34 @@ class ProfileController extends Controller
     // Update user's information from request
     public function update(Request $request){
     	$this->validate($request,[
-    		'name' => 'required|max:100',
+    		'name' => 'max:100',
             'location' => 'max:100',
             'bio' => 'max:250'
     	]);
+        $img;
+        $path = null;
+        if ($request->hasFile('image')) {
+            if (Auth::user()->avatar_url != null) {
+                File::delete('../storage/app/public/'.Auth::user()->avatar_url);
+            }
+            $img = Image::make($request->image);
+            $img->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->crop(128,128);
+            $img->encode();
+            $path = 'public/uploads/'.$request->image->hashName();
+            $img->save('../storage/app/public/uploads/'.$request->image->hashName());
+            //$path = $request->image->store('public/uploads');
+        }
 
     	Auth::user()->update([
     		'name' => $request->name,
             'location' => $request->location,
-            'bio' => $request->bio
+            'bio' => $request->bio,
+            'avatar_url' => "uploads/{$request->image->hashName()}"
     	]);
+
+        return Storage::url($path);
     }
 }

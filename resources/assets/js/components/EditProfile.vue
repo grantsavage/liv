@@ -6,8 +6,8 @@
 					<div class="panel-heading">Update Profile</div>
 					<div class="panel-body">
 						<img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128">
-						<label for="file" class="btn btn-primary">Upload Profile Picture</label>
-						<input id="file" name="file" type="file" class="hidden">
+						<label for="image" class="btn btn-primary" style="display: inline-block;">Upload Profile Picture</label>
+						<input id="image" name="image" type="file" class="hidden">
 						<hr>
 						<form action="#" class="form-horizontal" @submit.prevent="update">
 							<div class="form-group">	
@@ -61,11 +61,16 @@
 			update(){
 				this.posting = true;
 				this.buttonText = "Saving...";
-				this.$http.post('/profile/edit', {
-					name: this.name,
-					location: this.location,
-					bio: this.bio
-				},{timeout: 5000}).then((response) => {
+
+				var files = $("#image")[0].files;
+				var data = new FormData();
+
+				data.append('name',this.name);
+				data.append('location',this.location);
+				data.append('bio',this.bio);
+				data.append('image',files[0]);
+
+				this.$http.post('/profile/edit',data).then((response) => {
 					if (response.status == 200) {
 						swal({title:"Profile Updated", text:"Your profile has been updated successfully.", type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
 						$("#nav-name").text(this.name);
@@ -74,6 +79,7 @@
 					}
 					this.posting = false;
 					this.buttonText = "Save";
+					$(".img-rounded").attr("src",response.body);
 				}, (response) => {
 					swal({title: "Whoops...", text: "There was a problem updating your profile. Try again later...", type: "error"});
 					this.posting = false;
@@ -82,7 +88,7 @@
 				$("#submitButton").blur();
 			},
 			uploadProfilePhoto() {
-				
+
 			},
 			hide() {
 				this.searching = true;

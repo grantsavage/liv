@@ -4,6 +4,9 @@
 			<textarea class="form-control" cols="30" rows="3" placeholder="What's going on?" v-model="body"></textarea>
 		</div>
 		<button v-bind:class="{disabled: this.body == '' || this.body == null}" id="submitButton" type="submit" class="btn btn-primary">{{this.button_text}}<div class="button-loader hidden" style="display: inline-block;"></div></button>
+		<label for="pictureUpload" class="btn btn-default"><span class="glyphicon glyphicon-picture"></span></label>
+		<input ref="image" type="file" class="hidden" id="pictureUpload">
+		<img :class="{hidden: !postHasImage}" id="img" src="#" class="img-thumbnail" style="max-width: 200px;">
 		<p id="help" class="text-danger hidden">Your post must have text in it to post</p>
 		<div class="progress hidden">
 	        <div id="progressbar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -19,7 +22,8 @@
 		data () {
 			return {
 				body: null,
-				button_text: "Post it!"
+				button_text: "Post it!",
+				postHasImage: false,
 			}
 		},
 		methods: {
@@ -37,14 +41,19 @@
 					$("#progressbar").animate({
 					    width: "50%"
 					}, 100);
+					var files = $("#pictureUpload")[0].files;
+					var data = new FormData();
+
+					data.append('body', this.body);
+					data.append('image', files[0]);
+
 					// Post the request
-					this.$http.post('/posts', {
-						body: this.body
-					}).then((response) => {
+					this.$http.post('/posts', data).then((response) => {
 						// emit event
 						eventHub.$emit('post-added', response.body);
 
 						this.body = null;
+						
 						// Animate progress
 						$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-success");
 						$("#submitButton").removeClass("disabled").blur();
@@ -63,6 +72,25 @@
 					});
 				}				
 			}
+		},
+		mounted(){
+			function readURL(input) {
+
+			    if (input.files && input.files[0]) {
+			        var reader = new FileReader();
+
+			        reader.onload = function (e) {
+			            $('#img').attr('src', e.target.result).removeClass("hidden");
+			        }
+
+			        reader.readAsDataURL(input.files[0]);
+			    } else {
+			    	$("#img").addClass("hidden");
+			    }
+			}
+			$("#pictureUpload").change(function(){
+			    readURL(this);
+			});
 		}
 	}
 </script>
