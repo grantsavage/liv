@@ -32,14 +32,15 @@ class PostController extends Controller
             $path = $request->image->store('public/uploads');
         }
 
-         $this->validate($request, [
+        $this->validate($request, [
             'body' => 'required'
         ]);    	
 
         if ($path == null) {
            // Create the post
             $post = $request->user()->posts()->create([
-                'body' => $request->body
+                'body' => $request->body,
+                'image_url' => null
             ]);
         } else {
              // Create the post
