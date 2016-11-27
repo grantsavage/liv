@@ -45,7 +45,10 @@
 					var data = new FormData();
 
 					data.append('body', this.body);
-					data.append('image', files[0]);
+					if (files[0] != null) {
+						data.append('image', files[0]);
+					}
+					
 
 					// Post the request
 					this.$http.post('/posts', data).then((response) => {
@@ -69,6 +72,8 @@
 								$(".progress").removeClass("animated fadeOut");
 							},1000);
 						},300);
+						this.postHasImage = false;
+						$("#img").addClass("hidden");
 					});
 				}				
 			}

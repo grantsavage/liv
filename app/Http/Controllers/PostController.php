@@ -27,20 +27,27 @@ class PostController extends Controller
     // Store the submitted post
      public function store(Request $request){
         $path = null;
+        $post;
         if ($request->hasFile('image')) {
             $path = $request->image->store('public/uploads');
         }
 
+         $this->validate($request, [
+            'body' => 'required'
+        ]);    	
 
-    	$this->validate($request, [
-    		'body' => 'required'
-    	]);
-
-        // Create the post
-    	$post = $request->user()->posts()->create([
-    		'body' => $request->body,
-            'image_url' => Storage::url($path)
-    	]);
+        if ($path == null) {
+           // Create the post
+            $post = $request->user()->posts()->create([
+                'body' => $request->body
+            ]);
+        } else {
+             // Create the post
+            $post = $request->user()->posts()->create([
+                'body' => $request->body,
+                'image_url' => Storage::url($path)
+            ]);
+        }
 
         // Broadcast Notification
         broadcast(new PostWasCreated($post))->toOthers();
