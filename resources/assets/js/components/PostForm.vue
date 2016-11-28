@@ -5,7 +5,7 @@
 		</div>
 		<button v-bind:class="{disabled: this.body == '' || this.body == null}" id="submitButton" type="submit" class="btn btn-primary">{{this.button_text}}<div class="button-loader hidden" style="display: inline-block;"></div></button>
 		<label for="pictureUpload" class="btn btn-default"><span class="glyphicon glyphicon-picture"></span></label>
-		<input ref="image" type="file" class="hidden" id="pictureUpload">
+		<input ref="image" type="file" class="hidden" id="pictureUpload" name="image">
 		<img :class="{hidden: !postHasImage}" id="img" src="#" class="img-thumbnail" style="max-width: 200px;">
 		<p id="help" class="text-danger hidden">Your post must have text in it to post</p>
 		<div class="progress hidden">
@@ -45,11 +45,8 @@
 					var data = new FormData();
 
 					data.append('body', this.body);
-					if (files[0] != null) {
-						data.append('image', files[0]);
-					}
+					data.append('image', files[0]);
 					
-
 					// Post the request
 					this.$http.post('/posts', data).then((response) => {
 						// emit event

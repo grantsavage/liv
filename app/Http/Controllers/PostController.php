@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Image;
+use Storage;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Events\PostWasCreated;
-use Storage;
 
 class PostController extends Controller
 {
@@ -27,22 +28,23 @@ class PostController extends Controller
     // Store the submitted post
      public function store(Request $request){
         $this->validate($request, [
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'file'
         ]);     
-        $post;
-        if ($request->hasFile('image')) {
-            $path = $request->image->store('public/uploads');
-             // Create the post
-            $post = $request->user()->posts()->create([
-                'body' => $request->body,
-                'image_url' => Storage::url($path)
-            ]);
-        } else {
-             // Create the post
-            $post = $request->user()->posts()->create([
-                'body' => $request->body
-            ]);
+        $path = null;
+        if ($request->file('image')) {
+            $name = uniqid(true) . '.' . $request->file('image')->getClientOriginalExtension();;
+            $path = $request->file('image')->storeAs(
+                'public/uploads', $name
+            );
+            $imagePath = storage_path() . '/app/public/uploads/' . $name;
+            Image::make($imagePath)->save();
         }
+         // Create the post
+        $post = $request->user()->posts()->create([
+            'body' => $request->body,
+            'image_url' => Storage::url($path)
+        ]);
 
         // Broadcast Notification
         broadcast(new PostWasCreated($post))->toOthers();

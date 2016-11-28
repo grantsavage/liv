@@ -55,28 +55,25 @@ class ProfileController extends Controller
             'location' => 'max:100',
             'bio' => 'max:250'
     	]);
-        $img;
         $path = null;
         if ($request->hasFile('image')) {
-            if (Auth::user()->avatar_url != null) {
-                File::delete('../storage/app/public/'.Auth::user()->avatar_url);
-            }
-            $img = Image::make($request->image);
-            $img->resize(300, null, function ($constraint) {
+            $name = uniqid(true) . '.' . $request->file('image')->getClientOriginalExtension();
+            $path = $request->file('image')->storeAs(
+                'public/uploads', $name
+            );
+            $imagePath = storage_path() . '/app/public/uploads/' . $name;
+            Image::make($imagePath)->resize(300, null, function ($constraint) {
                 $constraint->aspectRatio();
-            });
-            $img->crop(128,128);
-            $img->encode();
-            $path = 'public/uploads/'.$request->image->hashName();
-            $img->save('../storage/app/public/uploads/'.$request->image->hashName());
-            //$path = $request->image->store('public/uploads');
+            })->crop(128,128)->encode()->save();
+            Auth::user()->update([
+                'avatar_url' => Storage::url($path)
+            ]);
         }
 
     	Auth::user()->update([
     		'name' => $request->name,
             'location' => $request->location,
             'bio' => $request->bio,
-            'avatar_url' => "uploads/{$request->image->hashName()}"
     	]);
 
         return Storage::url($path);
