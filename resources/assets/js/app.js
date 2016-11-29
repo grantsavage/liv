@@ -30,7 +30,7 @@ const app = new Vue({
     data: window.Laravel
 });
 
-$(function () {
+/*$(function () {
     $('#welcome').removeClass('hidden');
     $('#welcome').addClass('animated fadeIn');
-});
+});*/

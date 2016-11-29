@@ -28,6 +28,7 @@
     font-weight: 100;
     margin: 0;
     font-family: "Lato";
+    height: 100% !important;
 }
 
 .full-height {
@@ -57,12 +58,20 @@
 	font-size: 40px;
 }
 
+.author {
+    font-size: 20px;
+}
+
 .m-b-md {
 	margin-bottom: 30px;
 }
 
 #welcome {
   -webkit-animation-duration: 1s;
+}
+
+.wcontent {
+    height: 700px;
 }
 
 .dropdown-menu > .notifications {

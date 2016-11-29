@@ -86,7 +86,7 @@
 					if (response.body.error) {
 						swal({title:"Uh oh...", text: response.body.error, type:"error",showConfirmButton: true});
 					} else {
-						swal({title:"Friend Added", text:"Successfully removed " + this.user.name + " from your friends.", type:"success",timer: 3000,showCloseButton: false,showConfirmButton: false});
+						swal({title:"Friend Removed", text:"Successfully removed " + this.user.name + " from your friends.", type:"success",timer: 3000,showCloseButton: false,showConfirmButton: false});
 						this.isFriend = false;
 					}
 				}).then((response) => {

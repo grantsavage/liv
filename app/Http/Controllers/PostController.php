@@ -29,7 +29,6 @@ class PostController extends Controller
      public function store(Request $request){
         $this->validate($request, [
             'body' => 'required',
-            'image' => 'file'
         ]);     
         $path = null;
         if ($request->file('image')) {
@@ -38,7 +37,10 @@ class PostController extends Controller
                 'public/uploads', $name
             );
             $imagePath = storage_path() . '/app/public/uploads/' . $name;
-            Image::make($imagePath)->save();
+            Image::make($imagePath)->encode(null,75)->save();
+             Image::make($imagePath)->resize(1080, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode()->save();
         }
          // Create the post
         $post = $request->user()->posts()->create([
