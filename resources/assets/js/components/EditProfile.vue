@@ -5,7 +5,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Profile</div>
 					<div class="panel-body">
-						<img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128">
+						<img class="img-rounded" :src="avatar" alt="" width="128" height="128">
 						<label for="image" class="btn btn-primary" style="display: inline-block;">Upload Profile Picture</label>
 						<input id="image" name="image" type="file" class="hidden">
 						<hr>
@@ -30,7 +30,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-8">
-									<button :class="{disabled: posting}" id="submitButton" type="submit" class="btn btn-primary">{{ this.buttonText }}<div :class="{hidden: !this.posting}" class="button-loader" style="display: inline-block;"></div> </button>
+									<button :class="{disabled: posting}" id="submitButton" type="submit" class="btn btn-primary">{{ this.buttonText }}<div :class="{hidden: !this.posting}" class="button-loader" style="display: inline-block;"></div></button>
 								</div>
 							</div>
 						</form>
@@ -49,9 +49,11 @@
 				name: this.user.name,
 				location: this.user.location,
 				bio: this.user.bio,
+				avatar: this.user.avatar,
 				buttonText: "Save",
 				posting: false,
-				searching: false
+				searching: false,
+				_user: {}
 			}
 		},
 		props: [
@@ -79,7 +81,11 @@
 					}
 					this.posting = false;
 					this.buttonText = "Save";
-					$(".img-rounded").attr("src",response.body);
+					this._user = response.body;
+					this.name = this._user.name;
+					this.location = this._user.location;
+					this.bio = this._user.bio;
+					this.avatar = this._user.avatar;
 				}, (response) => {
 					swal({title: "Whoops...", text: "There was a problem updating your profile. Try again later...", type: "error"});
 					this.posting = false;
@@ -98,6 +104,7 @@
 			}
 		},
 		mounted(){
+			this._user = this.user;
 			eventHub.$on("search",this.hide);
 			eventHub.$on("not-searching",this.show);
 		}

@@ -52,7 +52,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">This page does'nt exist...</div>
+                <div class="title">This page doesn't exist...</div>
                 <a href="{{url('/home')}}">Go Home</a>
             </div>
         </div>

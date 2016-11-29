@@ -41,11 +41,12 @@ class PostController extends Controller
              Image::make($imagePath)->resize(1080, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->encode()->save();
+            $path = Storage::url($path);
         }
          // Create the post
         $post = $request->user()->posts()->create([
             'body' => $request->body,
-            'image_url' => Storage::url($path)
+            'image_url' => $path
         ]);
 
         // Broadcast Notification

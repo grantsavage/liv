@@ -76,6 +76,6 @@ class ProfileController extends Controller
             'bio' => $request->bio,
     	]);
 
-        return Storage::url($path);
+        return Auth::user();
     }
 }

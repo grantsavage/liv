@@ -6,12 +6,12 @@
 					<div class="panel-heading">
 						<img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128">
 						<h2 style=" display: inline-block;">{{this.user.name}}</h2>
+						<div @click="addFriend" :class="{'hidden': isFriend || this.user.id == $root.user.id, 'btn-primary': !requestSent, 'btn-success': requestSent , 'disabled': requestSent}" class="btn btn-primary" id="requestButton" style="display: inline-block;margin-left: 20px;"><span :class="{hidden: requestSent}" class="glyphicon glyphicon-plus"></span><span :class="{hidden: !requestSent}" class="glyphicon glyphicon-ok"></span>  {{this.buttonText}}&nbsp;<div class="button-loader hidden" style="display: inline-block;"></div></div>
+						<div @click="deleteFriend" class="btn btn-danger" style="display: inline-block;margin-left: 20px;" :class="{hidden: !isFriend}"><span class="glyphicon glyphicon-remove"></span>&nbsp;Delete Friend</div>
 						<a v-if="this.user.id == $root.user.id" href="/profile/edit" style="margin: 20px; display: inline-block;" class="btn btn-primary pull-right">Edit Profile</a>
 						<br>
 						<br>
 						<p class="lead" style="display: inline-block;">{{this.user.location}}</p>
-						<div @click="addFriend" :class="{'hidden': isFriend || this.user.id == $root.user.id, 'btn-primary': !requestSent, 'btn-success': requestSent, 'disabled': requestSent}" class="btn btn-primary" style="display: inline-block;margin-left: 20px;"><span :class="{hidden: requestSent}" class="glyphicon glyphicon-plus"></span>  {{this.buttonText}}</div>
-						<div @click="deleteFriend" class="btn btn-danger" style="display: inline-block;margin-left: 20px;" :class="{hidden: !isFriend}">Delete Friend</div>
 						<h4>Bio</h4>
 						<p class="">{{this.user.bio}}</p>
 					</div>
@@ -66,13 +66,19 @@
 			},
 			addFriend(){
 				if (this.requestSent == false) {
+					$(".button-loader").removeClass("hidden");
+					$("#requestButton").addClass("disabled");
 					this.$http.get('/friends/add/'+this.user.username).then((response) => {
 						if (response.body.error) {
 							swal({title:"Uh oh...", text: response.body.error, type:"error",showConfirmButton: true});
+							$(".button-loader").addClass("hidden");
+							$("#requestButton").removeClass("disabled");
 						} else {
 							swal({title:"Friend Added", text:"Friend request successfully sent to " + this.user.name, type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
 							this.requestSent = true;
 							this.buttonText = "Request Sent";
+							$(".button-loader").addClass("hidden");
+							$("#requestButton").removeClass("disabled");
 						}
 					}).then((response) => {
 						if (response) {
@@ -82,12 +88,15 @@
 				}
 			},
 			deleteFriend(){
+				$(".button-loader").removeClass("hidden");
 				this.$http.post("/friends/delete/"+this.user.username).then((response)=> {
 					if (response.body.error) {
 						swal({title:"Uh oh...", text: response.body.error, type:"error",showConfirmButton: true});
+						$(".button-loader").addClass("hidden");
 					} else {
 						swal({title:"Friend Removed", text:"Successfully removed " + this.user.name + " from your friends.", type:"success",timer: 3000,showCloseButton: false,showConfirmButton: false});
 						this.isFriend = false;
+						$(".button-loader").addClass("hidden");
 					}
 				}).then((response) => {
 					if (response) {
