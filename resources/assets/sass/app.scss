@@ -1,7 +1,7 @@
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-@import url(https://fonts.googleapis.com/css?family=Lato:100);
+@import url(https://fonts.googleapis.com/css?family=Lato:100,200,300);
 
 // Variables
 @import "variables";
@@ -12,6 +12,10 @@
 @import "node_modules/bootstrap-sweetalert/dist/sweetalert";
 @import "node_modules/spinthatshit/src/loaders";
 @import "node_modules/croppie/croppie";
+//@import "node_modules/bootstrap-switch/dist/css/bootstrap2/bootstrap-switch";
+
+// For nav bar
+body { padding-top: 70px; }
 
 //Prevents blue border forming around focused elements
 /*button:select, a:select, div:select, button:focus a:focus, div:focus {
@@ -25,14 +29,14 @@
 .welcome {
     /*background-color: #fff;*/
     color: #636b6f;
-    font-weight: 100;
     margin: 0;
     font-family: "Lato";
+    font-weight: 300;
     height: 100% !important;
 }
 
 .full-height {
-    height: 70vh;
+    height: 90vh;
 }
 
 .flex-center {
@@ -70,8 +74,11 @@
   -webkit-animation-duration: 1s;
 }
 
-.wcontent {
-    height: 700px;
+#footer {
+    display: flex;
+      flex-direction: column;
+      justify-content: center;
+    height: 20vh;
 }
 
 .dropdown-menu > .notifications {

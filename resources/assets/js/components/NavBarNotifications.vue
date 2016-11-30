@@ -61,13 +61,14 @@
         </a>
 
         <ul class="dropdown-menu" role="menu">
-            <li><a :href="'/user/' + this.user.username">Profile</a></li>
-            <li><a href="/profile/edit">Edit Profile</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a :href="'/user/' + this.user.username"><span class="glyphicon glyphicon-user"></span>&nbsp;Profile</a></li>
+            <li><a href="/profile/edit"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Edit Profile</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
             <li>
                 <a href="/logout"
                     onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
+                             <span class="glyphicon glyphicon-log-out"></span>&nbsp;
                     Logout
                 </a>
 

@@ -30,7 +30,8 @@ const app = new Vue({
     data: window.Laravel
 });
 
-/*$(function () {
-    $('#welcome').removeClass('hidden');
-    $('#welcome').addClass('animated fadeIn');
-});*/
+$(function () {
+    //$('#welcome').removeClass('hidden');
+    //$('#welcome').addClass('animated fadeIn');
+    //$("input[type='checkbox']").bootstrapSwitch();
+});

@@ -52,6 +52,7 @@
 						// emit event
 						eventHub.$emit('post-added', response.body);
 
+						$("#pictureUpload")[0].files = null;
 						this.body = null;
 						
 						// Animate progress

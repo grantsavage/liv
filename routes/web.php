@@ -34,6 +34,9 @@ Route::get('/user/{username}', "ProfileController@getProfile");
 Route::get('/profile/edit', 'ProfileController@edit');
 Route::post('/profile/edit', 'ProfileController@update');
 
+// Settings routes
+Route::get('/settings',"SettingsController@index");
+
 // Notification Routes
 Route::get('/notifications', "NotificationController@getUserUnreadNotifications");
 Route::get('/notifications/clear', "NotificationController@setNotificationsAsRead");

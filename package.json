@@ -21,6 +21,7 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "bootstrap-sweetalert": "^1.0.1",
+    "bootstrap-switch": "^3.3.2",
     "croppie": "^2.4.0",
     "push.js": "0.0.11",
     "spinthatshit": "^1.0.3"
