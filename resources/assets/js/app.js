@@ -29,9 +29,3 @@ const app = new Vue({
     el: '#app',
     data: window.Laravel
 });
-
-$(function () {
-    //$('#welcome').removeClass('hidden');
-    //$('#welcome').addClass('animated fadeIn');
-    //$("input[type='checkbox']").bootstrapSwitch();
-});

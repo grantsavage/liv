@@ -2,8 +2,8 @@
 
 @section('content')
 <div id="welcome" class="welcome flex-center">
-    <div class=" position-ref full-height">
-        <div class="content">
+    <div class="position-ref">
+        <div class="content full-height">
             <div class="title m-b-md">
                 Liv
             </div>
@@ -13,8 +13,8 @@
             <div class="m-b-md author">
                 Created and Developed by Grant Savage
             </div>
-            <br>
             @if(Auth::guest())
+            <br>
             <a href="/register" class="btn btn-primary btn-block" style="font-size: 30px;">Sign Up</a>
             <br>
             <a href="/login" class="btn btn-link">Already Have an Acccount? Sign In</a>

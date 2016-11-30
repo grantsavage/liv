@@ -63,7 +63,7 @@
         <ul class="dropdown-menu" role="menu">
             <li><a :href="'/user/' + this.user.username"><span class="glyphicon glyphicon-user"></span>&nbsp;Profile</a></li>
             <li><a href="/profile/edit"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Edit Profile</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
+            <li><a href="/settings"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
             <li>
                 <a href="/logout"
                     onclick="event.preventDefault();

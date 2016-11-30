@@ -11,7 +11,7 @@
 @import "node_modules/animate.css/animate";
 @import "node_modules/bootstrap-sweetalert/dist/sweetalert";
 @import "node_modules/spinthatshit/src/loaders";
-@import "node_modules/croppie/croppie";
+//@import "node_modules/croppie/croppie";
 //@import "node_modules/bootstrap-switch/dist/css/bootstrap2/bootstrap-switch";
 
 // For nav bar
@@ -87,11 +87,11 @@ body { padding-top: 70px; }
 }
 
 .loader {
-    @include loader01;
+    @include loader02;
 }
 
 .button-loader {
-    @include loader01($color: #ffffff, $size: 12px);
+    @include loader01($color: #fff, $size: 12px, $border-size: 2px);
 }
 
 a.like-2:select, a:hover, a.like-2:active, a.like-2:link, a.like-2:visited, a:focus {
