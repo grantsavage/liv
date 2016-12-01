@@ -1,5 +1,5 @@
 <template>
-		<a class="like-2" href="#" @click.prevent="like">{{this.text}}&nbsp;&nbsp;<span :class="{hidden: this.liking}" class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;<div :class="{hidden: !this.liking}" class="loader" style="display: inline-block;"></div></a>
+		<a class="like-2" href="#" @click.prevent="like">{{this.text}}&nbsp;&nbsp;<span :class="{hidden: this.liking}" class="glyphicon glyphicon-thumbs-up"></span><div :class="{hidden: !this.liking}" class="loader" style="display: inline-block;"></div></a>
 </template>
 
 <script>
@@ -49,5 +49,9 @@
 
 	.like-2 {
 		margin-right: 10px;
+	}
+
+	.like-2:hover, .like-2:focus {
+		text-decoration: none !important;
 	}
 </style>

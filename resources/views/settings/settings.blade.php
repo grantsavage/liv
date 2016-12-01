@@ -8,8 +8,8 @@
 				<div class="panel-heading">
 					General
 				</div>
-				<div class="panel-body" style="background-color: #333;">
-					<div class="button-loader"></div>
+				<div class="panel-body">
+					
 				</div>
 			</div>
 			<div class="panel panel-default">

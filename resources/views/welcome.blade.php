@@ -13,12 +13,10 @@
             <div class="m-b-md author">
                 Created and Developed by Grant Savage
             </div>
-            @if(Auth::guest())
             <br>
             <a href="/register" class="btn btn-primary btn-block" style="font-size: 30px;">Sign Up</a>
             <br>
             <a href="/login" class="btn btn-link">Already Have an Acccount? Sign In</a>
-            @endif
         </div>
     </div>
 </div>
@@ -30,7 +28,7 @@
                  <div class="col-md-4">
                     <h2>No News</h2>
                     <span class="glyphicon glyphicon-filter" style="font-size: 60px;"></span>
-                    <p>One of the core reasons on why Liv was developed was that news was becoming overwhelming on other social networks. The amount of fake news cluttered the network. Liv filters out news so that you can focus on what matters.</p>
+                    <p>One of the core reasons that Liv was developed was that news was becoming overwhelming on other social networks. The amount of fake news cluttered the network. Liv filters out news so that you can focus on what matters.</p>
                 </div>
                  <div class="col-md-4">
                     <h2>Slim</h2>
@@ -47,7 +45,7 @@
              <br>
              <div class="row flex-center">
                  <div class="col-md-6 col-md-3-offset">
-                     <a href="/register" class="btn btn-primary btn-block" style="font-size: 30px;">Convinced?</a>
+                     <a href="/register" class="btn btn-primary btn-block" style="font-size: 30px;">Register Now</a>
                  </div>
              </div>
          </div>
