@@ -31,13 +31,12 @@ class PostController extends Controller
             'body' => 'required',
         ]);     
         $path = null;
-        if ($request->file('image')) {
+        if ($request->hasFile('image')) {
             $name = uniqid(true) . '.' . $request->file('image')->getClientOriginalExtension();;
             $path = $request->file('image')->storeAs(
                 'public/uploads', $name
             );
             $imagePath = storage_path() . '/app/public/uploads/' . $name;
-            //Image::make($imagePath)->encode(null,75)->save();
             Image::make($imagePath)->resize(1080, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->encode('png',80)->save();

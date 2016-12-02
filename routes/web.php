@@ -36,6 +36,7 @@ Route::post('/profile/edit', 'ProfileController@update');
 
 // Settings routes
 Route::get('/settings',"SettingsController@index");
+Route::get('/settings/verifyEmail/{email}',"SettingsController@verifyEmail");
 
 // Notification Routes
 Route::get('/notifications', "NotificationController@getUserUnreadNotifications");

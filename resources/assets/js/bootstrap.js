@@ -11,6 +11,7 @@ window.$ = window.jQuery = require('jquery');
 require('bootstrap-sass');
 require('bootstrap-sweetalert');
 require('croppie');
+require('lity');
 //require('bootstrap-switch');
 
 /**
