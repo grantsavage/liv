@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Mail;
+use Setting;
 use App\Mail\NewSignup;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Http\Controllers\Controller;
@@ -72,8 +73,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'location' => "",
-            'bio' => ""
+            'bio' => "",
+            'settings' => ""
         ]);
+        Setting::set('emailNotifications','true',$user->id);
+        Setting::set('pushNotifications','true', $user->id);
+        Setting::save($user->id);
         // Mail to user
         Mail::to($user)->send(new NewSignup($user));
 

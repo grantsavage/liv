@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Post;
 use App\User;
+use Setting;
 
 class PostLiked extends Notification
 {
@@ -32,7 +33,11 @@ class PostLiked extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database'];
+        if (Setting::get('emailNotifications','true',$this->post->user->id) == "false") {
+            return ['database'];
+        } else {
+            return ['mail','database'];
+        }
     }
 
     /**

@@ -8,23 +8,24 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Setting;
 
 class FriendRequestReceived extends Notification
 {
     use Queueable;
 
     public $sender;
-    //public $receiver;
+    public $receiver;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $sender)
+    public function __construct(User $sender,User $receiver)
     {
         $this->sender = $sender;
-        //$this->receiver = $receiver;
+        $this->receiver = $receiver;
     }
 
     /**
@@ -35,7 +36,11 @@ class FriendRequestReceived extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        if (Setting::get('emailNotifications','true',$this->receiver->id) == 'false') {
+           return null;
+        } else {
+            return ['mail'];
+        }
     }
 
     /**

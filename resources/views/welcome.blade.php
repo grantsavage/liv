@@ -1,5 +1,6 @@
 @extends('layouts.app')
-
+{{$feedback = null}}
+{{$meesage = null}}
 @section('content')
 <div id="welcome" class="welcome flex-center">
     <div class="position-ref">
@@ -57,5 +58,11 @@
         <p>&copy; 2016 Liv, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
     </footer>
 </div>
+
+@if($feedback)
+<script>
+    swal({title: {{$feedback}},text: {{$message}},type: 'success',timer: 2000,showCloseButton: false,showConfirmButton: false});
+</script>
+@endif
 
 @endsection

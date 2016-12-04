@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<settings :user="{{Auth::user()}}" :email="{{json_encode(Auth::user()->email)}}"></settings>
+		<settings :user="{{Auth::user()}}" :email="{{json_encode(Auth::user()->email)}}"  :settings="{{$settings}}"></settings>
 @endsection

@@ -8,7 +8,7 @@
                             <post-form></post-form>
                             <hr>
                             <post v-for="post in posts" :post="post"></post>
-                            <p v-if="posts.length <= 0">No posts to show!</p>
+                            <p v-if="posts.length <= 0">No posts to show! Go make some friends!</p>
                         </div>
                     </div>
                 </div>

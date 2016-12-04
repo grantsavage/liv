@@ -36,7 +36,10 @@ Route::post('/profile/edit', 'ProfileController@update');
 
 // Settings routes
 Route::get('/settings',"SettingsController@index");
+Route::post('/settings',"SettingsController@saveSettings");
 Route::get('/settings/verifyEmail/{email}',"SettingsController@verifyEmail");
+Route::post('/settings/account/remove', "SettingsController@removeAccount");
+Route::post('/settings/account/password', "SettingsController@changePassword");
 
 // Notification Routes
 Route::get('/notifications', "NotificationController@getUserUnreadNotifications");

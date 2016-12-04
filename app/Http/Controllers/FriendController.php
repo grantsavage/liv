@@ -46,7 +46,7 @@ class FriendController extends Controller
 
 		// Notify user
 		broadcast(new RequestWasSent(Auth::user(),$user));
-		$user->notify(new FriendRequestReceived(Auth::user()));
+		$user->notify(new FriendRequestReceived(Auth::user(),$user));
 
 		// Return OK
 		return response(null,200);

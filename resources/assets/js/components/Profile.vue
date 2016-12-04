@@ -4,7 +4,7 @@
 			<div class="col-md-10 col-md-offset-1">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128">
+						<a :href="this.user.avatar" data-lity><img class="img-rounded" :src="this.user.avatar" alt="" width="128" height="128"></a>
 						<h2 style=" display: inline-block;">{{this.user.name}}</h2>
 						<div @click="addFriend" :class="{'hidden': isFriend || this.user.id == $root.user.id, 'btn-primary': !requestSent, 'btn-success': requestSent , 'disabled': requestSent}" class="btn btn-primary" id="requestButton" style="display: inline-block;margin-left: 20px;"><span :class="{hidden: requestSent}" class="glyphicon glyphicon-plus"></span><span :class="{hidden: !requestSent}" class="glyphicon glyphicon-ok"></span>&nbsp;{{this.buttonText}}&nbsp;<div class="button-loader hidden" style="display: inline-block;"></div></div>
 						<div @click="deleteFriend" class="btn btn-danger" style="display: inline-block;margin-left: 20px;" :class="{hidden: !isFriend}"><span class="glyphicon glyphicon-remove"></span>&nbsp;Delete Friend&nbsp;<div id="rl" class="button-loader hidden" style="display: inline-block;"></div></div>

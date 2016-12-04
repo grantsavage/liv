@@ -9,7 +9,7 @@
 		<div class="media-body">
 			<a :href="'/user/' + post.user.username"><strong>{{ post.user.name }}</strong></a>
 			<p>{{ post.body }}</p>
-			<a :href="post.image_url" data-lity><img :class="{hidden: !post.image_url}" :src="post.image_url" alt="" class="img-responsive" style="max-width: 350px;max-height: 250;margin-bottom: 10px;"></a>
+			<img :class="{hidden: !post.image_url}" :src="post.image_url" alt="" class="img-responsive time-image" style="max-width: 350px;max-height: 250;margin-bottom: 10px;" data-lity :data-lity-target="post.image_url">
 			<p><like-button :post="post" v-if="post.likedByCurrentUser === false && post.user.id !== $root.user.id"></like-button>&nbsp;&nbsp;{{ post.likeCount }} {{ pluralize('like', post.likeCount) }}</p>
 		</div>
 	</div>
@@ -40,5 +40,9 @@
 
 	.media:hover .like {
 		display: block;
+	}
+
+	.time-image:hover {
+		cursor: pointer;
 	}
 </style>
