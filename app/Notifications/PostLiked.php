@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Setting;
 
-class PostLiked extends Notification implements ShouldQueue
+class PostLiked extends Notification
 {
     use Queueable, SerializesModels;
 
