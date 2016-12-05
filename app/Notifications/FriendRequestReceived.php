@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Setting;
 
-class FriendRequestReceived extends Notification
+class FriendRequestReceived extends Notification implements ShouldQueue
 {
     use Queueable;
 
