@@ -9201,4 +9201,23 @@ body {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
+.timeline-loader {
+  width: 56px;
+  height: 56px;
+  border: 8px solid transparent;
+  border-top-color: #0052ec;
+  border-bottom-color: #0052ec;
+  border-radius: 50%;
+  position: relative;
+  -webkit-animation: loader-rotate 1s linear infinite;
+  animation: loader-rotate 1s linear infinite; }
+
+@keyframes loader-rotate {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
 /*# sourceMappingURL=app.css.map */

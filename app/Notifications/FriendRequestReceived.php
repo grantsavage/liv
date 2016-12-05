@@ -54,7 +54,7 @@ class FriendRequestReceived extends Notification
         return (new MailMessage)
                     ->subject("You have a new friend request!")
                     ->line($this->sender->name.' sent you a friend request!')
-                    ->action('Accept Their Request', url('/user/'.$this->sender->username)
+                    ->action('Accept Their Request', url('/user/'.$this->sender->username))
                     ->line('Thanks for using Liv');
     }
 

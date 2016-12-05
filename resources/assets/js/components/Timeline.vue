@@ -7,8 +7,11 @@
                         <div class="panel-body">
                             <post-form></post-form>
                             <hr>
-                            <post v-for="post in posts" :post="post"></post>
-                            <p v-if="posts.length <= 0">No posts to show! Go make some friends!</p>
+                            <post v-show="!loading" v-for="post in posts" :post="post"></post>
+                            <div v-show="loading">
+                                <div class="timeline-loader center-block"></div>
+                            </div>
+                            <p class="text-center" v-show="!loading" v-if="posts.length <= 0">No posts to show! Go make some friends!</p>
                         </div>
                     </div>
                 </div>
@@ -25,7 +28,8 @@
         data() {
             return {
                 posts: [],
-                searching: false
+                searching: false,
+                loading: true
             }
         },
         methods: {
@@ -52,9 +56,10 @@
                 this.searching = false;
             },
             reload(){ 
-                this.$http.get('/posts').then((response) => {
+                 this.$http.get('/posts').then((response) => {
                     this.posts = response.body
-                });
+                    this.loading = false;
+                });     
             }
         },
         components: [
