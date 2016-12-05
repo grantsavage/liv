@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function () {
+            DB::table('notifications')->where('read_at','!=',null)->delete();
+        })->everyMinute();
+
+        $schedule->command('cache:clear')->daily();
     }
 
     /**
