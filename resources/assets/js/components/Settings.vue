@@ -7,8 +7,8 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title text-center">Are You Sure You Want to Delete You Account?</h4>
 		      </div>
-		      <div class="modal-body">
-		        	<h4 class="text-center">Enter Your Password To Confirm</h4>
+		      <div class="modal-body text-center">
+		        	<h4 class="">Enter Your Password To Confirm</h4>
 		        	<input type="password" class="form-control" id="confirmRemovePassword" style="margin-bottom: 20px;">
 		        	<div class="alert alert-danger hidden" role="alert" id="deleteAlert"></div>
 		      </div>
@@ -211,6 +211,8 @@
 			},
 			showRemoveModal() {
 				$('#remove').modal('show');
+				$('#confirmRemovePassword').focus();
+				$('#confirmRemovePassword').focus();
 			},
 			removeAccount() {
 				if ($("#confirmRemovePassword").val() == null || $("#confirmRemovePassword").val() == '') {
@@ -236,7 +238,7 @@
 							
 						}
 					}
-				}).then((response) => {
+				}, (response) => {
 						this.isRemoving = false;
 						if (response.body.error) {
 							$("#deleteAlert").removeClass("hidden").text(response.body.error);

@@ -6,9 +6,11 @@ use Auth;
 use Image;
 use Storage;
 use App\Post;
+use Carbon\Carbon; 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Events\PostWasCreated;
+use App\Jobs\ResizePostImage;
 
 class PostController extends Controller
 {
@@ -32,14 +34,13 @@ class PostController extends Controller
         ]);     
         $path = null;
         if ($request->hasFile('image')) {
-            $name = uniqid(true) . '.' . $request->file('image')->getClientOriginalExtension();;
+            $name = uniqid(true) . '.' . $request->file('image')->getClientOriginalExtension();
             $path = $request->file('image')->storeAs(
                 'public/uploads', $name
             );
             $imagePath = storage_path() . '/app/public/uploads/' . $name;
-            Image::make($imagePath)->resize(1080, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->encode('png',80)->save();
+            $job = (new ResizePostImage($imagePath));
+            dispatch($job);
             $path = Storage::url($path);
         }
          // Create the post

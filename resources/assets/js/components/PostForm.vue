@@ -49,29 +49,56 @@
 					
 					// Post the request
 					this.$http.post('/posts', data).then((response) => {
-						// emit event
-						eventHub.$emit('post-added', response.body);
+						if (response.status == 200) {
+							eventHub.$emit('post-added', response.body);
 
-						$("#pictureUpload")[0].files = null;
-						this.body = null;
-						
-						// Animate progress
-						$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-success");
-						$("#submitButton").removeClass("disabled").blur();
-						this.button_text = "Post it!";
-						$(".button-loader").addClass("hidden");
-						setTimeout(function(){
-							// Fade out bar
-							$(".progress").addClass("animated fadeOut");
-							// Reset Progress
-							setTimeout(function() {
-								$(".progress").addClass("hidden");
-								$("#progressbar").css("width","0%").removeClass("progress-bar-success");
-								$(".progress").removeClass("animated fadeOut");
-							},1000);
-						},300);
-						this.postHasImage = false;
-						$("#img").addClass("hidden");
+							$("#pictureUpload")[0].files = null;
+							this.body = null;
+							
+							// Animate progress
+							$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-success");
+							$("#submitButton").removeClass("disabled").blur();
+							this.button_text = "Post it!";
+							$(".button-loader").addClass("hidden");
+							setTimeout(function(){
+								// Fade out bar
+								$(".progress").addClass("animated fadeOut");
+								// Reset Progress
+								setTimeout(function() {
+									$(".progress").addClass("hidden");
+									$("#progressbar").css("width","0%").removeClass("progress-bar-success");
+									$(".progress").removeClass("animated fadeOut");
+								},1000);
+							},300);
+							this.postHasImage = false;
+							$("#img").addClass("hidden");
+						} else {
+							swal({type: 'error',title: 'Uh oh...',text: "A problem occured while posting. The image you submitted may be too large. Try compressing the image and re-upload."});
+						}
+					}, (response) => {
+						if (response) {
+							$("#pictureUpload")[0].files[0] = null;
+							this.body = null;
+							
+							// Animate progress
+							$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-danger");
+							$("#submitButton").removeClass("disabled").blur();
+							this.button_text = "Post it!";
+							$(".button-loader").addClass("hidden");
+							setTimeout(function(){
+								// Fade out bar
+								$(".progress").addClass("animated fadeOut");
+								// Reset Progress
+								setTimeout(function() {
+									$(".progress").addClass("hidden");
+									$("#progressbar").css("width","0%").removeClass("progress-bar-danger");
+									$(".progress").removeClass("animated fadeOut");
+								},100);
+							},1500);
+							this.postHasImage = false;
+							$("#img").addClass("hidden");
+							swal({type: 'error',title: 'Uh oh...',text: "A problem occured while posting. The image you submitted may be too large. Try compressing the image and re-upload."});
+						}
 					});
 				}				
 			}
@@ -108,3 +135,9 @@
 	    transition: none !important;
 	}
 </style>
+
+<!--</color> <navyblue> 
+
+<georgina is cool>
+
+<I love Grant> <3 -->

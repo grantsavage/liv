@@ -22,7 +22,7 @@
 					eventHub.$emit('post-liked', this.post.id, true);
 					this.liking = false;
 					this.text = "Like";
-				}).then((response)=> {
+				}, (response)=> {
 					this.liking = false;
 					this.text = "Like";
 				});
