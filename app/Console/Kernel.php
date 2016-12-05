@@ -25,11 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
         $schedule->call(function () {
             DB::table('notifications')->where('read_at','!=',null)->delete();
-        })->everyMinute();
+        })->daily();
 
         $schedule->command('cache:clear')->daily();
     }
