@@ -58,7 +58,7 @@
                  text-align: center; text-decoration: none; -webkit-text-size-adjust: none; background-color: #3869D4;"
                                                             class="button"
                                                             target="_blank">
-                                                            Go
+                                                            Launch Liv
                                                         </a>
                                                     </td>
                                                 </tr>

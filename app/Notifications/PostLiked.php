@@ -2,17 +2,21 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use App\Post;
 use App\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
 use Setting;
 
-class PostLiked extends Notification
+class PostLiked extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, SerializesModels;
+
+    public $post;
+    public $user;
 
     /**
      * Create a new notification instance.

@@ -2,17 +2,17 @@
 
 namespace App\Notifications;
 
-use Auth;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Setting;
 
-class FriendRequestReceived extends Notification
+class FriendRequestReceived extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, SerializesModels;
 
     public $sender;
     public $receiver;
