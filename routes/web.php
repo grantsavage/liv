@@ -54,3 +54,6 @@ Route::get('/friends/add/{username}', "FriendController@getAdd");
 Route::get('/friends/accept/{username}', "FriendController@getAccept");
 Route::get('/friends/decline/{username}', 'FriendController@getDecline');
 Route::post('/friends/delete/{username}', "FriendController@postDelete");
+
+// Post
+Route::get('/post/{id}', "PostController@viewPost");

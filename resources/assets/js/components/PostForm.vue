@@ -9,7 +9,7 @@
 		<img :class="{hidden: !postHasImage}" id="img" src="#" class="img-thumbnail" style="max-width: 200px;">
 		<p id="help" class="text-danger hidden">Your post must have text in it to post</p>
 		<div class="progress hidden">
-	        <div id="progressbar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+	        <div id="progressbar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" v-bind:style="{'width' : progress + '%'}">
 	            <span class="sr-only">0% Complete</span>
 	        </div>  
 	    </div>
@@ -24,6 +24,7 @@
 				body: null,
 				button_text: "Post it!",
 				postHasImage: false,
+				progress: 0
 			}
 		},
 		methods: {
@@ -33,14 +34,12 @@
 					$("#help").removeClass("hidden").addClass("animated flash");
 				} else {
 					// Change UI to loading state
+					$('.progress').removeClass('hidden');
 					$(".button-loader").removeClass("hidden");
 					$("#help").addClass("hidden");
 					$("#submitButton").addClass("disabled").blur();
 					this.button_text = "Posting   ";
-					$(".progress").removeClass("hidden");
-					$("#progressbar").animate({
-					    width: "50%"
-					}, 100);
+					
 					var files = $("#pictureUpload")[0].files;
 					var data = new FormData();
 
@@ -48,30 +47,35 @@
 					data.append('image', files[0]);
 					
 					// Post the request
-					this.$http.post('/posts', data).then((response) => {
+					this.$http.post('/posts', data, {
+						progress: (e) => {
+							if (!e.lengthComputable) {
+								return
+							}
+							this.progress = Math.ceil((e.loaded / e.total) * 100);
+						}
+					}).then((response) => {
 						if (response.status == 200) {
 							eventHub.$emit('post-added', response.body);
 
-							$("#pictureUpload")[0].files = null;
 							this.body = null;
 							
 							// Animate progress
-							$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-success");
+							$('#progressbar').addClass('progress-bar-success');
 							$("#submitButton").removeClass("disabled").blur();
 							this.button_text = "Post it!";
 							$(".button-loader").addClass("hidden");
-							setTimeout(function(){
-								// Fade out bar
-								$(".progress").addClass("animated fadeOut");
-								// Reset Progress
-								setTimeout(function() {
-									$(".progress").addClass("hidden");
-									$("#progressbar").css("width","0%").removeClass("progress-bar-success");
-									$(".progress").removeClass("animated fadeOut");
-								},1000);
-							},300);
+							
 							this.postHasImage = false;
-							$("#img").addClass("hidden");
+
+							setTimeout(function() {
+								$('#progressbar').removeClass('progress-bar-success');
+								$('.progress').addClass('hidden');
+								$("#pictureUpload")[0].files = null;
+								$("#img").addClass("hidden");
+							},2000);
+
+							
 						} else {
 							swal({type: 'error',title: 'Uh oh...',text: "A problem occured while posting. The image you submitted may be too large. Try compressing the image and re-upload."});
 						}
@@ -80,21 +84,10 @@
 							$("#pictureUpload")[0].files[0] = null;
 							this.body = null;
 							
-							// Animate progress
-							$("#progressbar").animate({width: "100%"}, 100).addClass("progress-bar-danger");
 							$("#submitButton").removeClass("disabled").blur();
 							this.button_text = "Post it!";
 							$(".button-loader").addClass("hidden");
-							setTimeout(function(){
-								// Fade out bar
-								$(".progress").addClass("animated fadeOut");
-								// Reset Progress
-								setTimeout(function() {
-									$(".progress").addClass("hidden");
-									$("#progressbar").css("width","0%").removeClass("progress-bar-danger");
-									$(".progress").removeClass("animated fadeOut");
-								},100);
-							},1500);
+							
 							this.postHasImage = false;
 							$("#img").addClass("hidden");
 							swal({type: 'error',title: 'Uh oh...',text: "A problem occured while posting. The image you submitted may be too large. Try compressing the image and re-upload."});

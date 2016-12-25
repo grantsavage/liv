@@ -21,6 +21,16 @@ require('lity');
  */
 
 window.Vue = require('vue');
+
+/**
+ * Configuration options for disabling access to Vue data and silencing 
+ * Vue warnings and errors. Uncomment to put into production mode.
+ */
+
+//Vue.config.devtools = false;
+//Vue.config.debug = false;
+//Vue.config.silence = true;
+
 require('vue-resource');
 
 /**

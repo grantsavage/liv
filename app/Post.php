@@ -30,4 +30,8 @@ class Post extends Model
     public function likes() {
     	return $this->morphMany(Like::class, 'likeable');
     }
+
+    public function photos() {
+        return $this->hasMany('App\Media');
+    }
 }

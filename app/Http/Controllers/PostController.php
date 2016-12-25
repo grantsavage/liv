@@ -6,6 +6,7 @@ use Auth;
 use Image;
 use Storage;
 use App\Post;
+use App\Media;
 use Carbon\Carbon; 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -54,5 +55,14 @@ class PostController extends Controller
 
         // Return the post
     	return $post->load(['user']);
+    }
+
+    public function viewPost($id) {
+        $post = Post::where('id',$id)->first();
+        if (!$post) {
+            return redirect('/home');
+        }
+        $post->load(['user']);
+        return view('post.post')->with(['post'=>$post]);
     }
 }

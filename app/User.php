@@ -34,10 +34,10 @@ class User extends Authenticatable
     }
 
     public function getAvatarAttribute(){
-        if ($this->avatar_url) {
-            return $this->avatar_url;
-        } else {
+        if ($this->avatar_url == null) {
             return '/images/default.png';
+        } else {
+            return $this->avater_url;
         }
     }
 
