@@ -30,8 +30,11 @@ class ResizePostImage implements ShouldQueue
      */
     public function handle()
     {
-         Image::make($this->imagePath)->resize(1080, null, function ($constraint) {
+         Image::make($this->imagePath)
+            ->resize(1080, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->encode('png',80)->save();
+            })
+            ->encode('png',80)
+            ->save();
     }
 }

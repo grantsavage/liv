@@ -8,11 +8,18 @@
                             <div class="media" v-for="result in results">
 								<div class="media-left">
 									<a :href="'/user/' + result.username">
-										<img class="media-object img-rounded" v-bind:src="result.avatar" v-bind:alt="result.name + ' avatar'" width="40" height="40">
+										<img 
+											class="media-object img-rounded" 
+											v-bind:src="result.avatar" 
+											v-bind:alt="result.name + ' avatar'" 
+											width="40" 
+											height="40">
 									</a>
 								</div>
 								<div class="media-body">
-									<a :href="'/user/' + result.username"><strong>{{ result.name }}</strong></a>
+									<a :href="'/user/' + result.username">
+										<strong>{{ result.name }}</strong>
+									</a>
 								</div>
 							</div>
                         </div>
@@ -32,21 +39,40 @@
 			}
 		},
 		methods: {
+			/*
+			 * Get the search query from the event
+			 */
 			getQuery(query) {
+				// Check if query is not empty
 				if (query.length !== 0) {
+
+					// Setup UI
 					this.searching = true;
+
+					// Create request
 					this.$http.get('/search',{params:  {query: query}}).then((response) => {
+
+						// Get the results
 						this.results = response.body;
+
+					// Handle response error
 					}).then((response) => {
 
 					});
+
+				// Reset UI
 				} else {
 					this.searching = false;
 					eventHub.$emit("not-searching");
 				}	
 			}
 		},
+
+		/*
+		 * Executed when view is mounted
+		 */
 		mounted() {
+			// Set up event listener
 			eventHub.$on("search",this.getQuery);
 		}
 	}

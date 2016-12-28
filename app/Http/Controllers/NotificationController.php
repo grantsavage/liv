@@ -9,12 +9,16 @@ use App\Http\Requests;
 
 class NotificationController extends Controller
 {
-	// Protect the page
+	/*
+     * Authorization Middleware   
+     */
     public function __construct(){
     	$this->middleware(['auth']);
     }
 
-    // Return unread notifications
+    /*
+     * Return unread notifications
+     */
     public function getUserUnreadNotifications(Request $request) {
 		if ($request->wantsJson()) {
 			return Auth::user()->unreadNotifications;
@@ -23,7 +27,9 @@ class NotificationController extends Controller
 		}
     }
 
-    // Set all notifications as read
+    /*
+     * Mark notifications as read
+     */
     public function setNotificationsAsRead() {
     	if (Auth::check()) {
     		foreach (Auth::user()->unreadNotifications as $notification) {

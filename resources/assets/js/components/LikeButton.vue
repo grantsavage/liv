@@ -1,5 +1,19 @@
 <template>
-		<a class="like-2" href="#" @click.prevent="like">{{this.text}}&nbsp;&nbsp;<span :class="{hidden: this.liking}" class="glyphicon glyphicon-thumbs-up"></span><div :class="{hidden: !this.liking}" class="loader" style="display: inline-block;"></div></a>
+	<a 
+	class="like-2" 
+	href="#" 
+	@click.prevent="like">
+		{{this.text}}&nbsp;&nbsp;
+		<span 
+			:class="{hidden: this.liking}" 
+			class="glyphicon glyphicon-thumbs-up">
+		</span>
+		<div 
+			:class="{hidden: !this.liking}" 
+			class="loader" 
+			style="display: inline-block;">
+		</div>
+	</a>
 </template>
 
 <script>
@@ -11,18 +25,32 @@
 				text: "Like"
 			}
 		},
+
 		props: [
 			'post'
 		],
+
 		methods: {
+			/*
+			 * Post like to server and update timeline
+			 */
 			like() {
+				// Set up UI
 				this.liking = true;
 				this.text = "";
+
+				// Make request
 				this.$http.post('/posts/'+ this.post.id +'/likes').then((response) => {
+					// Emit event
 					eventHub.$emit('post-liked', this.post.id, true);
+
+					// Reset UI
 					this.liking = false;
 					this.text = "Like";
+
+				// Handle response error
 				}, (response)=> {
+					// Reset UI
 					this.liking = false;
 					this.text = "Like";
 				});

@@ -1,6 +1,5 @@
 <template>
-	<div class="media">
-		
+	<div class="media">	
 		<div class="media-left">
 			<a :href="'/user/' + post.user.username">
 				<img class="media-object img-rounded" v-bind:src="post.user.avatar" v-bind:alt="post.user.name + ' avatar'" width="40" height="40">
@@ -32,9 +31,11 @@
 		props: [
 			'post'
 		],
+
 		components: [
 			LikeButton
 		],
+		
 		methods: {
 			pluralize
 		}

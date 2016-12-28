@@ -56,55 +56,88 @@
 				_user: {}
 			}
 		},
+
 		props: [
 			'user'
 		],
+
 		methods: {
+			/*
+			 * Make request to server to update settings
+			 */
 			update(){
+				// Set up UI
 				this.posting = true;
 				this.buttonText = "Saving...";
 
+				// Get data
 				var files = $("#image")[0].files;
 				var data = new FormData();
 
+				// Add the data to the request
 				data.append('name',this.name);
 				data.append('location',this.location);
 				data.append('bio',this.bio);
 				data.append('image',files[0]);
 
+				// Make the request
 				this.$http.post('/profile/edit',data).then((response) => {
+
 					if (response.status == 200) {
+						// Alert the user
 						swal({title:"Profile Updated", text:"Your profile has been updated successfully.", type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
+
 						$("#nav-name").text(this.name);
+
+					// Handle error
 					} else {
 						swal({title: "Whoops...", text: "There was a problem updating your profile. Try again later...", type: "error"});
 					}
+
+					// Reset UI
 					this.posting = false;
 					this.buttonText = "Save";
+
+					// Get and set new user info
 					this._user = response.body;
 					this.name = this._user.name;
 					this.location = this._user.location;
 					this.bio = this._user.bio;
 					this.avatar = this._user.avatar;
+
+				// Handle response error
 				}, (response) => {
+					// Alert user
 					swal({title: "Whoops...", text: "There was a problem updating your profile. Try again later...", type: "error"});
+
+					// Reset UI
 					this.posting = false;
 					this.buttonText = "Save";
 				});
+
 				$("#submitButton").blur();
 			},
-			uploadProfilePhoto() {
 
-			},
+			/*
+			 * Hide and show view when performing search
+			 */
 			hide() {
 				this.searching = true;
 			},
 			show() {
 				this.searching = false;
 			}
+
 		},
+
+		/*
+		 * Executed when view is mounted
+		 */
 		mounted(){
+			// Set user data
 			this._user = this.user;
+
+			// Set up event listeners
 			eventHub.$on("search",this.hide);
 			eventHub.$on("not-searching",this.show);
 		}

@@ -33,9 +33,16 @@
             }
         },
         methods: {
+            /*
+             * Method for adding post to timeline
+             */
             addPost(post) {
                 this.posts.unshift(post)
             },
+
+            /*
+             * Update the likes of a post when the event occurs
+             */
             likePost(postId, likedByCurrentUser) {
                 for (var i = 0; i <= this.posts.length; i++) {
                     if (this.posts[i].id === postId) {
@@ -49,12 +56,20 @@
                     }
                 }
             },
+
+            /*
+             * Hide and show timeline when searching
+             */
             hideTimeline(){
                 this.searching = true;
             },
             showTimeline(){
                 this.searching = false;
             },
+
+            /*
+             * Reload the page when the event occurs
+             */
             reload(){ 
                  this.$http.get('/posts').then((response) => {
                     this.posts = response.body
@@ -62,15 +77,23 @@
                 });     
             }
         },
+
         components: [
             Post
         ],
+
+        /*
+         * Executed when view is mounted
+         */
         mounted() {
+            // Event listener setup
             eventHub.$on('post-added', this.addPost);
             eventHub.$on('post-liked', this.likePost);
             eventHub.$on('search',this.hideTimeline);
             eventHub.$on('not-searching', this.showTimeline);
             eventHub.$on('reload-timeline', this.reload);
+
+            // Load the posts
             this.reload();
         }
     }

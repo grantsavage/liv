@@ -30,15 +30,12 @@
         </ul>
     </li>
 
-
-
     <li>
         <a href="#">
             <span class="glyphicon glyphicon-comment"></span>
         </a>
     </li>
 
-    
     <li class="dropdown" id="noti">
         <a id="notifications" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <span class="glyphicon glyphicon-globe"></span>
@@ -71,7 +68,6 @@
                              <span class="glyphicon glyphicon-log-out"></span>&nbsp;
                     Logout
                 </a>
-
                 <form id="logout-form" action="/logout" method="POST" style="display: none;">
                     <input type="hidden" name="_token" :value="$root.csrfToken">
                 </form>
@@ -92,67 +88,131 @@
                 reqs: []
 			}
 		},
+
 		props: ['user','requests'],
+
+        /*
+         * When view is mounted
+         */
         mounted() {
+            // Set data to property
             this.reqs = this.requests;
+
+            // Get notifications and add them to the list
             this.$http.get('/notifications').then((response) => {
                 this.notifications = response.body;
                 this.noti_count = this.notifications.length;
             });
+
+            // Set request count
             this.req_count = this.reqs.length;
             //eventHub.$on('post-liked',this.addNotification);
+            
+            // Set up event listeners
             eventHub.$on('user-post-liked',this.addNotification);
             eventHub.$on('clear',this.clear);
+            eventHub.$on('request-received',this.addRequest);
+
+            // Emit clear event when notifications dropdown is clicked
             $('#noti').on('show.bs.dropdown', function () {
                 eventHub.$emit('clear');
             });
-            eventHub.$on('request-received',this.addRequest);
         },
+
 		methods: {
+            /*
+             * Send request to server to clear notifications
+             */
             clear() {
                 this.noti_count = 0;
                 this.$http.get('/notifications/clear');
             },
+
+            /*
+             * Get unread notifications and add them to the list
+             */
             addNotification(postId, likedByCurrentUser, post) {
                 this.$http.get('/notifications').then((response) => {
                     this.notifications = response.body;
                     this.noti_count = this.notifications.length;
                 });
             },
+
+            /*
+             * Add request to list
+             */
             addRequest(user) {
                 this.reqs.unshift(user);
                 this.req_count = this.requests.length;
             },
+
+            /*
+             * Send to request to server to accept a request and remove it from the list
+             */
             acceptRequest(request) {
+                // Send request to server
                 this.$http.get("/friends/accept/"+request.username).then((response) => {
+
+                    // Check for errors
                     if (response.body.error) {
+
                         swal({title:"Uh oh...", text: response.body.error, type:"error",showConfirmButton: true});
+
+                    // If there is no error, alert the user of the successful add
                     } else {
                          swal({title:"Friend Added", text:"You and " + request.name + " are now friends!", type:"success",timer: 3000,showCloseButton: false,showConfirmButton: false});
-                         eventHub.$emit("reload-timeline");
+
+                        // Reload the timeline to show new friends posts
+                        eventHub.$emit("reload-timeline");
+
+                        // Get index of request
                         var index = this.reqs.indexOf(request);
+
+                        // Remove request and reset request length
                         this.reqs.splice(index, 1);
                         this.req_count = this.reqs.length;
                     }
+
+                // Handle Response Error
                 }).then((response) => {
+                    // Check for resposne
                     if (response) {
+                        // Alert user
                         swal({title:"Whoops...", text:"There was a issue accepting the friend request",showConfirmButton: true});
                     }
                 });
             },
+
+            /*
+             * Remove request from list and send XHR request to remove from backend
+             */
             deleteRequest(request) {
+                // Send request to server
                 this.$http.get("/friends/decline/"+request.username).then((response) => {
+
+                    // Check if there is an error
                     if (response.body.error) {
+
                         swal({title:"Uh oh...", text: response.body.error, type:"error",showConfirmButton: true});
+
+                    // If there is no error, alert user of success
                     } else {
                         swal({title:"Request Declined", text:request.name + "'s friend request has been deleted.", type:"success",timer: 3000,showCloseButton: false,showConfirmButton: false});
+
+                        // Get the index of the request
                         var index = this.reqs.indexOf(request);
+
+                        //  Remove request and reset request count
                         this.reqs.splice(index, 1);
                         this.req_count = this.reqs.length;
                     }
+
+                // Handle response error
                 }).then((response) => {
+                    // Check if there is a response
                     if (response) {
-                         swal({title:"Whoops...", text:"There was a issue deleting the friend request",showConfirmButton: true});
+                        // Alert user
+                        swal({title:"Whoops...", text:"There was a issue deleting the friend request",showConfirmButton: true});
                     }
                 });
             }
