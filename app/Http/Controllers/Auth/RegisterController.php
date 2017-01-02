@@ -80,7 +80,7 @@ class RegisterController extends Controller
         Setting::set('pushNotifications','true', $user->id);
         Setting::save($user->id);
         // Mail to user
-        Mail::to($user)->send(new NewSignup($user));
+        //Mail::to($user)->send(new NewSignup($user));
 
         // Return user
         return $user;
