@@ -5,7 +5,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<a 
-						:href="this.user.avatar" 
+						:href="'/user/'+this.user.username" 
 						data-lity>
 							<img 
 							class="img-rounded" 
