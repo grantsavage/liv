@@ -78,8 +78,8 @@ class PostController extends Controller
         ]);
 
         // Broadcast Notification
-        broadcast(new PostWasCreated($post))->toOthers();
-
+        //broadcast(new PostWasCreated($post))->toOthers();
+        
         // Return the post
     	return $post->load(['user']);
     }
@@ -101,5 +101,21 @@ class PostController extends Controller
 
         // Response
         return view('post.post')->with(['post'=>$post]);
+    }
+
+    public function delete($id) {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response(null,404);
+        }
+
+        if ($post->user->id != Auth::id()) {
+            return response(null,409);
+        }
+
+        $post->delete();
+
+        return response()->json(["ok"=>true]);
     }
 }

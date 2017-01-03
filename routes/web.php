@@ -27,7 +27,7 @@ Route::get('/posts', 'PostController@index');
 Route::post('/posts', 'PostController@store');
 
 // Like route
-Route::post('/posts/{post}/likes', "PostLikeController@store");
+Route::get('/posts/{post}/likes', "PostLikeController@store");
 
 // Profile routes
 Route::get('/user/{username}', "ProfileController@getProfile");
@@ -57,3 +57,4 @@ Route::post('/friends/delete/{username}', "FriendController@postDelete");
 
 // Post
 Route::get('/post/{id}', "PostController@viewPost");
+Route::delete('/post/{id}', "PostController@delete");

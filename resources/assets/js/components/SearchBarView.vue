@@ -5,7 +5,7 @@
 	      	type="text" 
 	      	class="form-control" 
 	      	placeholder="Search for people..." 
-	      	style="width: 20em" 
+	      	style="width: 20em; border: none; box-shadow: none;" 
 	      	name="query" 
 	      	v-on:input="fire" 
 	      	v-model="query">
@@ -35,3 +35,14 @@
 		}
 	}
 </script>
+
+<style scoped>
+	input {
+		border: none;
+		box-shadow: none;
+	}
+
+	input:focus {
+		box-shadow: none;
+	}
+</style>

@@ -7,14 +7,10 @@
 		</div>
 		<div class="media-body">
 			<a :href="'/user/' + post.user.username"><strong>{{ post.user.name }}</strong></a>
-			<div class="dropdown pull-right">
+			<div v-if="post.user.id == $root.user.id" class="dropdown pull-right">
 			    <button class="btn btn-default dropdown-toggle" :id="'post-menu-'+post.id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button>
 			  <ul class="dropdown-menu" :aria-labelledby="'post-menu-'+post.id">
-			    <li><a href="#">Edit</a></li>
-			    <li><a href="#">Another action</a></li>
-			    <li><a href="#">Something else here</a></li>
-			    <li role="separator" class="divider"></li>
-			    <li><a href="#">Separated link</a></li>
+			    <li @click.prevent="postDelete"><a style="color: #ED4F32" class="text-center post-delete" href="#">Delete</a></li>
 			  </ul>
 			</div>
 			<p>{{ post.body }}</p>
@@ -27,6 +23,7 @@
 <script>
 	import pluralize from 'pluralize'
 	import LikeButton from './LikeButton.vue' 
+	import eventHub from '../event.js'
 	export default {
 		props: [
 			'post'
@@ -37,7 +34,20 @@
 		],
 		
 		methods: {
-			pluralize
+			pluralize,
+
+			postDelete() {
+
+				this.$http.delete('/post/'+this.post.id).then((response) => {
+					if (response) {
+						swal({title:"Successfully Deleted Post", type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
+						eventHub.$emit('postDelete', this.post.id);
+					}
+					swal({title:"Successfully Deleted Post", type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
+				}, (response) => {
+					swal({title:"Whoops...", text: 'There was a problem deleting the post.', type:"error", showCloseButton: false});
+				});
+			}
 		}
 	}
 </script>

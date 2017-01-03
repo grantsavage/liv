@@ -4,6 +4,6 @@
 	<profile 
 		:user="{{ $user }}" 
 		:friends="{{Auth::user()->friends()}}" 
-		:requests="{{Auth::user()->friendRequestsPending()}}">
+		:requests="{{Auth::user()->friendRequests()}}">
 	</profile>
 @endsection

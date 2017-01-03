@@ -9,9 +9,13 @@
 		        <h4 class="modal-title text-center">Are You Sure You Want to Delete You Account?</h4>
 		      </div>
 		      <div class="modal-body text-center">
-		        	<h4 class="">Enter Your Password To Confirm</h4>
-		        	<input type="password" class="form-control" id="confirmRemovePassword" style="margin-bottom: 20px;">
-		        	<div class="alert alert-danger hidden" role="alert" id="deleteAlert"></div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<h4 class="">Enter Your Password To Confirm</h4>
+		        			<input type="password" class="form-control" id="confirmRemovePassword" style="margin-bottom: 20px;">
+		        			<div class="alert alert-danger hidden" role="alert" id="deleteAlert"></div>
+						</div>
+					</div>
 		      </div>
 		      <div class="modal-footer">
 		      	<div class="text-center">
@@ -156,7 +160,7 @@
 								@click="showRemoveModal" 
 								class="btn btn-block btn-danger">
 									Delete Account
-							d</button>
+							</button>
 						</div>
 					</div>
 				</div>
@@ -359,7 +363,7 @@
 				if ($("#confirmRemovePassword").val() == null || $("#confirmRemovePassword").val() == '') {
 
 					// Show error
-					$("#deleteAlert").removeClass("hidden").text("Please Enter your password");
+					$("#deleteAlert").removeClass("hidden").text("Please nter your password");
 
 					return;
 				}
@@ -430,3 +434,12 @@
 		}
 	}
 </script>
+
+<style scoped>
+	button:focus, button:active, button:select {
+		border: none;
+		box-shadow: none;
+		border-color: none;
+		box-shadow-color: none;
+	}
+</style>

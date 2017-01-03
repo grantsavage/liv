@@ -17,38 +17,64 @@
 						<h2 style=" display: inline-block;">
 							{{this.user.name}}
 						</h2>
+
+
 						<div 
 						@click="addFriend" 
-						:class="{'hidden': isFriend || this.user.id == $root.user.id, 'btn-primary': !requestSent, 'btn-success': requestSent , 'disabled': requestSent}" 
-						class="btn btn-primary" 
+						:class="{'hidden' : awaitingAccept || isFriend, 'btn-primary' : !isFriend, 'btn-success' : friendRequestSent, 'disabled' : friendRequestSent || sendingFriendRequest}" 
+						class="btn" 
 						id="requestButton" 
 						style="display: inline-block;margin-left: 20px;">
 						<span 
-						:class="{hidden: requestSent}" 
+						:class="{'hidden' : isFriend || friendRequestSent || sendingFriendRequest}" 
 						class="glyphicon glyphicon-plus">		
 						</span>
 						<span 
-						:class="{hidden: !requestSent}" 
+						:class="{'hidden' : !friendRequestSent || sendingFriendRequest}" 
 						class="glyphicon glyphicon-ok">
 						</span>
-							&nbsp;{{this.buttonText}}&nbsp;
+							&nbsp;{{this.buttonText}}&nbsp; 
 						<div 
-						class="button-loader hidden" 
+						class="button-loader" 
+						:class="{'hidden' : !sendingFriendRequest}"
 						style="display: inline-block;"></div>
 						</div>
+
+
 						<div 
 						@click="deleteFriend" 
 						class="btn btn-danger" 
 						style="display: inline-block;margin-left: 20px;" 
-						:class="{hidden: !isFriend}">
+						:class="{'hidden' : awaitingAccept || friendRequestSent || !isFriend, 'disabled' : deletingFriend}">
 						<span 
 						class="glyphicon glyphicon-remove"></span>
-							&nbsp;Delete Friend&nbsp;
+							&nbsp;{{this.buttonText}}&nbsp; 
 						<div 
 						id="rl" 
-						class="button-loader hidden" 
+						class="button-loader" 
+						:class="{'hidden' : !deletingFriend}"
 						style="display: inline-block;"></div>
 						</div>
+
+
+						<div 
+						@click="acceptRequest" 
+						:class="{'hidden' : !awaitingAccept, 'disabled' : accepting || friendAdded}" 
+						class="btn btn-success" 
+						id="acceptButton" 
+						style="display: inline-block;margin-left: 20px;">
+						<span 
+						:class="" 
+						class="glyphicon glyphicon-ok">		
+						</span>
+							&nbsp;{{this.buttonText}}&nbsp; 
+						<div 
+						class="button-loader" 
+						:class="{'hidden' : !accepting}"
+						style="display: inline-block;"></div>
+						</div>
+
+
 						<a 
 						v-if="this.user.id == $root.user.id" 
 						href="/profile/edit" 
@@ -84,8 +110,18 @@
 		data() {
 			return {
 				searching: false,
+
 				isFriend: false,
-				requestSent: false,
+				sendingFriendRequest: false,
+				friendRequestSent: false,
+
+				awaitingAccept: false,
+				accepting: false,
+				friendAdded: false,
+
+				deletingFriend: false,
+				friendDeleted: false,
+
 				buttonText: "Add Friend"
 			}
 		},
@@ -116,14 +152,22 @@
 				for (var i = 0; i < this.friends.length; i++) {
 					if(this.friends[i].id == this.user.id) {
 						this.isFriend = true;
+						this.buttonText = "Delete Friend"
 					}
 				}
 
 				// Check if request is pending
 				for (var i = 0; i < this.requests.length; i++) {
+
+					// If the user is a request
 					if(this.requests[i].id == this.user.id) {
-						this.requestSent = true;
-						this.buttonText = "Request Pending";
+						this.friendRequestSent = true;
+						this.buttonText = "Request Pending"
+					}
+
+					if (this.requests[i].pivot.user_id != this.user.id) {
+						this.awaitingAccept = true;
+						this.buttonText = "Accept Request";
 					}
 				}
 			},
@@ -134,12 +178,11 @@
 			addFriend(){
 
 				// Check if request has not been sent
-				if (this.requestSent == false) {
+				if (this.isFriend == false) {
 
 					// Set up UI
-					$(".button-loader").removeClass("hidden");
-					$("#requestButton").addClass("disabled");
-
+					this.sendingFriendRequest = true;
+					this.buttonText = "Sending Request..."
 					// Create request
 					this.$http.get('/friends/add/'+this.user.username).then((response) => {
 
@@ -148,6 +191,8 @@
 
 							// Alert user
 							swal({title:"Uh oh...", text: response.body.error, type:"error",showConfirmButton: true});
+
+							this.sendingFriendRequest = false;
 
 							// Reset UI
 							$(".button-loader").addClass("hidden");
@@ -159,8 +204,8 @@
 							// Alert user
 							swal({title:"Friend Added", text:"Friend request successfully sent to " + this.user.name, type:"success",timer: 2000,showCloseButton: false,showConfirmButton: false});
 
-							this.requestSent = true;
-
+							this.sendingFriendRequest = false;
+							this.friendRequestSent = true;
 							// Reset UI
 							this.buttonText = "Request Sent";
 							$(".button-loader").addClass("hidden");
@@ -168,8 +213,8 @@
 						}
 
 					// Handle response error
-					}).then((response) => {
-
+					},(response) => {
+						this.sendingFriendRequest = false;
 						// Check for response
 						if (response) {
 							// Alert user
@@ -184,7 +229,8 @@
 			 */
 			deleteFriend(){
 				// UI
-				$("#rl").removeClass("hidden");
+				this.deletingFriend = true
+				this.buttonText = "Removing Friend..."
 
 				// Make request
 				this.$http.post("/friends/delete/"+this.user.username).then((response)=> {
@@ -195,7 +241,7 @@
 						// Alert user
 						swal({title:"Uh oh...", text: response.body.error, type:"error",showConfirmButton: true});
 						$("#rl").addClass("hidden");
-
+						this.deletingFriend = false
 					// If there are no errors
 					} else {
 
@@ -203,13 +249,14 @@
 						swal({title:"Friend Removed", text:"Successfully removed " + this.user.name + " from your friends.", type:"success",timer: 3000,showCloseButton: false,showConfirmButton: false});
 
 						this.isFriend = false;
-
+						this.deletingFriend = false
 						// Reset UI
 						$("#rl").addClass("hidden");
+						this.buttonText = "Add Friend"
 					}
 
 				// Handle response error
-				}).then((response) => {
+				},(response) => {
 
 					// Check for response
 					if (response) {
@@ -217,6 +264,29 @@
 						swal({title:"Whoops...", text:"There was a issue deleting this friend,",showConfirmButton: true});
 					}
 				});
+			},
+
+			acceptRequest() {
+				if (this.awaitingAccept == true) {
+
+					this.accepting = true;
+
+					this.buttonText = "Accepting..."
+
+					this.$http.get('/friends/accept/'+this.user.username).then(response => {
+						this.accepting = false;
+						this.buttonText = "Request Accepted";
+						this.awaitingResponse = false
+						this.friendAdded = true
+						swal({type: 'success', title: 'Success!', text: 'Successfully accepted ' + this.user.name + '\'s request.' , timer: 3000, showCloseButton: false, showConfirmButton: false});
+					}, (response) => {
+						this.accepting = false
+						if (response.error) {
+							swal({type: 'error', title: 'Whoops...', text: response.error, showCloseButton: true, showConfirmButton: false});
+						}
+						swal({type: 'error', title: 'Whoops...', text: 'There was a problem accepting the friend request.', showCloseButton: true, showConfirmButton: false});
+					});
+				}
 			}
 		},
 		

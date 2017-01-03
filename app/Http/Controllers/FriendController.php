@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Setting;
 use App\User;
 use App\Events\RequestWasSent;
 use App\Notifications\FriendRequestReceived;
@@ -34,29 +35,33 @@ class FriendController extends Controller
 
 		// Return Error
 		if (!$user) {
-			return response(["error"=>"User was not found"],200);
+			return response(["error"=>"User was not found"],409);
 		}
 
 		// Return error
 		if (Auth::user()->id === $user->id) {
-			return response(["error"=>"Can't add yourself"],200);
+			return response(["error"=>"Can't add yourself"],409);
 		}
 
 		// Return error
 		if (Auth::user()->hasFriendRequestPending($user) || $user->hasFriendRequestPending(Auth::user())) {
-			return response(["error"=>"Friend Request Already Pending"],200);
+			return response(["error"=>"Friend Request Already Pending"],409);
 		}
 
 		// Return error
 		if(Auth::user()->isFriendsWith($user)) {
-			return response(["error"=>"You're already friends!"],200);
+			return response(["error"=>"You're already friends!"],409);
 		}
 
 		// Send request
 		Auth::user()->addFriend($user);
 
 		// Notify user
-		broadcast(new RequestWasSent(Auth::user(),$user));
+		// 
+		if (Setting::get('pushNotifications','true',$user->id) != 'false') {
+			broadcast(new RequestWasSent(Auth::user(),$user));
+		}
+
 		$user->notify(new FriendRequestReceived(Auth::user(),$user));
 
 		// Return OK

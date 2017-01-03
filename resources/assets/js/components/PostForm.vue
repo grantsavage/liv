@@ -4,9 +4,10 @@
 			<textarea 
 				class="form-control" 
 				cols="30" 
-				rows="3" 
+				rows="1" 
 				placeholder="What's going on?" 
-				v-model="body">
+				v-model="body"
+				style="border: none; box-shadow: none;">
 			</textarea>
 		</div>
 		<button 
@@ -85,8 +86,10 @@
 				// If body is not empty
 				} else {
 
+					if (this.postHasImage) {
+						$('.progress').removeClass('hidden');
+					}
 					// Change UI to loading state
-					$('.progress').removeClass('hidden');
 					$(".button-loader").removeClass("hidden");
 					$("#help").addClass("hidden");
 					$("#submitButton").addClass("disabled").blur();
@@ -138,11 +141,19 @@
 								$('.progress').addClass('hidden');
 								$("#pictureUpload")[0].files = null;
 								$("#img").addClass("hidden");
+								this.progress = 0
 							},2000);
 
 						// Handle response error
 						} else {
+							// Alert user
 							swal({type: 'error',title: 'Uh oh...',text: "A problem occured while posting. The image you submitted may be too large. Try compressing the image and re-upload."});
+
+							// Reset Progress Bar
+							$('#progressbar').removeClass('progress-bar-success');
+							$('.progress').addClass('hidden');
+							$("#pictureUpload")[0].files = null;
+							$("#img").addClass("hidden");
 						}
 
 					// Handle response error
@@ -178,6 +189,7 @@
 
 			        reader.onload = function (e) {
 			            $('#img').attr('src', e.target.result).removeClass("hidden");
+			            this.postHasImage = true
 			        }
 
 			        reader.readAsDataURL(input.files[0]);

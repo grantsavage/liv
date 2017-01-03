@@ -3,7 +3,7 @@
         <div :class="{hidden: searching}" class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Timeline</div>
+                    <!--<div class="panel-heading">Timeline</div>-->
                         <div class="panel-body">
                             <post-form></post-form>
                             <hr>
@@ -57,6 +57,16 @@
                 }
             },
 
+            deletePost(postId) {
+                for (var i = 0; i <= this.posts.length; i++) {
+                    if (this.posts[i].id === postId) {
+                        this.posts.splice(i,1);
+
+                        break;
+                    }
+                }
+            },
+
             /*
              * Hide and show timeline when searching
              */
@@ -92,6 +102,7 @@
             eventHub.$on('search',this.hideTimeline);
             eventHub.$on('not-searching', this.showTimeline);
             eventHub.$on('reload-timeline', this.reload);
+            eventHub.$on('postDelete', this.deletePost);
 
             // Load the posts
             this.reload();

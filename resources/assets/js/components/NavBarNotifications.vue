@@ -104,8 +104,13 @@
                 this.noti_count = this.notifications.length;
             });
 
-            // Set request count
-            this.req_count = this.reqs.length;
+            // Request count logic
+            for (var i = 0; i < this.reqs.length; i++) {
+                if(this.reqs[i].pivot.user_id == this.user.id) {
+                    this.req_count++;
+                }
+            }
+
             //eventHub.$on('post-liked',this.addNotification);
             
             // Set up event listeners

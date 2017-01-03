@@ -57,3 +57,14 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '41642e9f51d545749d9b'
 });
+
+$(document).ready(function() {
+	$("#authSubmitButton").click(function() {
+		if ($('.auth')[0].checkValidity()) {
+			$('.button-loader').removeClass('hidden');
+			$("#authSubmitButton").addClass('disabled');
+			$(".lText").text("Logging In... ");
+			$(".rText").text("Registering... ");
+		}
+	});
+});

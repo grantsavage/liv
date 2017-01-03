@@ -10,6 +10,9 @@ class PostPolicy
 {
     use HandlesAuthorization;
 
+    /*
+     * User cannot like own post
+     */
     public function like(User $user, Post $post) {
         return $user->id !== $post->user->id;
     }
