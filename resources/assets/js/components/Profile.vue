@@ -21,7 +21,7 @@
 
 						<div 
 						@click="addFriend" 
-						:class="{'hidden' : awaitingAccept || isFriend, 'btn-primary' : !isFriend, 'btn-success' : friendRequestSent, 'disabled' : friendRequestSent || sendingFriendRequest}" 
+						:class="{'hidden' : awaitingAccept || isFriend || this.user.id == $root.user.id, 'btn-primary' : !isFriend, 'btn-success' : friendRequestSent, 'disabled' : friendRequestSent || sendingFriendRequest}" 
 						class="btn" 
 						id="requestButton" 
 						style="display: inline-block;margin-left: 20px;">
@@ -45,7 +45,7 @@
 						@click="deleteFriend" 
 						class="btn btn-danger" 
 						style="display: inline-block;margin-left: 20px;" 
-						:class="{'hidden' : awaitingAccept || friendRequestSent || !isFriend, 'disabled' : deletingFriend}">
+						:class="{'hidden' : awaitingAccept || friendRequestSent || !isFriend || this.user.id == $root.user.id, 'disabled' : deletingFriend}">
 						<span 
 						class="glyphicon glyphicon-remove"></span>
 							&nbsp;{{this.buttonText}}&nbsp; 
@@ -59,7 +59,7 @@
 
 						<div 
 						@click="acceptRequest" 
-						:class="{'hidden' : !awaitingAccept, 'disabled' : accepting || friendAdded}" 
+						:class="{'hidden' : !awaitingAccept || this.user.id == $root.user.id, 'disabled' : accepting || friendAdded}" 
 						class="btn btn-success" 
 						id="acceptButton" 
 						style="display: inline-block;margin-left: 20px;">
