@@ -24,6 +24,7 @@
 			for="pictureUpload" 
 			class="btn btn-default">
 			<span class="glyphicon glyphicon-picture"></span>
+			Photo
 		</label>
 		<input 
 			ref="image" 
@@ -86,9 +87,7 @@
 				// If body is not empty
 				} else {
 
-					if (this.postHasImage) {
-						$('.progress').removeClass('hidden');
-					}
+					$('.progress').removeClass('hidden');
 					// Change UI to loading state
 					$(".button-loader").removeClass("hidden");
 					$("#help").addClass("hidden");
@@ -142,7 +141,7 @@
 								$("#pictureUpload")[0].files = null;
 								$("#img").addClass("hidden");
 								this.progress = 0
-							},2000);
+							},500);
 
 						// Handle response error
 						} else {

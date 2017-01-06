@@ -85,7 +85,7 @@
                     this.posts = response.body
                     this.loading = false;
                 });     
-            }
+            },
         },
 
         components: [
@@ -103,7 +103,6 @@
             eventHub.$on('not-searching', this.showTimeline);
             eventHub.$on('reload-timeline', this.reload);
             eventHub.$on('postDelete', this.deletePost);
-
             // Load the posts
             this.reload();
         }

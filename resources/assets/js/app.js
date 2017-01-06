@@ -25,6 +25,7 @@ Vue.component('nav-bar-notifications', require('./components/NavBarNotifications
 Vue.component('search-bar-view', require('./components/SearchBarView.vue'));
 Vue.component('search-results-view', require('./components/SearchResultsView.vue'));
 Vue.component('settings', require('./components/Settings.vue'));
+Vue.component('reply', require('./components/Reply.vue'));
 
 const app = new Vue({
     el: '#app',

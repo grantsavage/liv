@@ -68,7 +68,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary btn-block">
+                                <button type="submit" id="authSubmitButton" class="btn btn-primary btn-block">
                                     <span class="rText">Register</span>
                                     <div 
                                         class="button-loader hidden" 

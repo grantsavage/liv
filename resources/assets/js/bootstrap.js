@@ -52,6 +52,7 @@ Vue.http.interceptors.push((request, next) => {
  */
 
 import Echo from "laravel-echo"
+import autosize from "autosize"
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -59,6 +60,11 @@ window.Echo = new Echo({
 });
 
 $(document).ready(function() {
+
+	/*
+	 * Shows loader on submit buttons on auth pages
+	 */
+
 	$("#authSubmitButton").click(function() {
 		if ($('.auth')[0].checkValidity()) {
 			$('.button-loader').removeClass('hidden');
@@ -66,5 +72,17 @@ $(document).ready(function() {
 			$(".lText").text("Logging In... ");
 			$(".rText").text("Registering... ");
 		}
+	});
+
+	/*
+	 * Autosize the textareas
+	 */
+	autosize(document.querySelectorAll('textarea'));
+
+	/*
+	 * This returns the post dropdowns to the correct z-index after lightbox close
+	 */
+	$(document).on("lity:close", function() {
+		$(".post-dropdown").css("z-index","200");
 	});
 });

@@ -1,19 +1,33 @@
 <template>
-	<a 
-	class="like-2" 
-	href="#" 
-	@click.prevent="like">
-		{{this.text}}&nbsp;&nbsp;
-		<span 
-			:class="{hidden: this.liking}" 
-			class="glyphicon glyphicon-thumbs-up">
-		</span>
-		<div 
-			:class="{hidden: !this.liking}" 
-			class="loader" 
-			style="display: inline-block;">
-		</div>
-	</a>
+	<p>
+		<a 
+		class="like-2" 
+		href="#" 
+		v-if="post.user.id != $root.user.id"
+		@click.prevent="like">
+			<span 
+				:class="{hidden: this.liking}" 
+				class="glyphicon glyphicon-thumbs-up" style="margin-right: 5px;">
+			</span>
+			{{this.text}}&nbsp;&nbsp;
+			<div 
+				:class="{hidden: !this.liking}" 
+				class="loader" 
+				style="display: inline-block;">
+			</div>
+		</a>
+		<a 
+		v-if="post.parent_id == null"
+		class="like-2" 
+		href="#" 
+		@click.prevent="showCommentForm">
+			<span 
+				:class="" 
+				class="glyphicon glyphicon-comment" style="margin-right: 5px;">
+			</span>
+			Comment&nbsp;&nbsp;
+		</a>
+	</p>
 </template>
 
 <script>
@@ -22,7 +36,7 @@
 		data() {
 			return {
 				liking: false,
-				text: "Like"
+				text: "Like",
 			}
 		},
 
@@ -54,6 +68,10 @@
 					this.liking = false;
 					this.text = "Like";
 				});
+			},
+
+			showCommentForm() {
+				eventHub.$emit("showCommentForm" + this.post.id);
 			}
 		}
 	}

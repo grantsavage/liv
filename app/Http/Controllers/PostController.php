@@ -27,13 +27,13 @@ class PostController extends Controller
      */
     public function index(){
         // Return posts only from user and user friends
-    	return Post::where(function($query) {
+    	return Post::notReply()->where(function($query) {
             return $query
                 ->where('user_id', Auth::user()->id)
                 ->orWhereIn('user_id', Auth::user()
                 ->friends()->pluck('id'));
             })
-            ->with(['user'])
+            ->with(['user','replies'])
             ->latestFirst()
             ->get();
     }
@@ -82,6 +82,30 @@ class PostController extends Controller
         
         // Return the post
     	return $post->load(['user']);
+    }
+
+    public function storeReply(Request $request, $postId) {
+        $this->validate($request, [
+            "body" => "required"
+        ]);
+
+        $post = Post::notReply()->find($postId);
+
+        if (!$post) {
+            return response()->json(["error" => "Could not find post"]);
+        }
+
+        if (!Auth::user()->isFriendsWith($post->user) && Auth::user()->id !== $post->user->id) {
+            return response()->json(["error" => "Can't reply if you're not friends"]);
+        }
+
+        $reply = $request->user()->posts()->create([
+            'body' => $request->body,
+        ]);
+
+        $post->replies()->save($reply);
+
+        return $reply->load(['user']);
     }
 
     /*

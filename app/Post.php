@@ -9,7 +9,7 @@ class Post extends Model
 {
     protected $fillable = ['body','image_url'];
 
-    protected $appends = ['likeCount', 'likedByCurrentUser'];
+    protected $appends = ['likeCount', 'commentCount', 'likedByCurrentUser'];
 
     /*
      * Get the latest posts first
@@ -43,7 +43,15 @@ class Post extends Model
     	return $this->morphMany(Like::class, 'likeable');
     }
 
-    public function photos() {
-        return $this->hasMany('App\Media');
+    public function scopeNotReply($query) {
+        return $query->whereNull('parent_id');
+    }
+
+    public function replies() {
+        return $this->hasMany(Post::class,'parent_id')->with(['user']);
+    }
+
+    public function getCommentCountAttribute(){
+        return $this->replies->count();
     }
 }

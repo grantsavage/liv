@@ -29,6 +29,9 @@ Route::post('/posts', 'PostController@store');
 // Like route
 Route::get('/posts/{post}/likes', "PostLikeController@store");
 
+// Reply route
+Route::post('/posts/{post}/reply', "PostController@storeReply");
+
 // Profile routes
 Route::get('/user/{username}', "ProfileController@getProfile");
 Route::get('/profile/edit', 'ProfileController@edit');
