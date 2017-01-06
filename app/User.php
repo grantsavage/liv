@@ -36,7 +36,7 @@ class User extends Authenticatable
      * Return the collection of posts that belong to the user
      */
     public function posts() {
-        return $this->hasMany(Post::class)->orderBy('created_at','desc');
+        return $this->hasMany(Post::class)->notReply()->orderBy('created_at','desc');
     }
 
     /*
