@@ -45,7 +45,7 @@
 		<div class="progress hidden">
 	        <div 
 	        	id="progressbar" 
-	        	class="progress-bar progress-bar-striped active" 
+	        	class="progress-bar" 
 	        	role="progressbar" 
 	        	aria-valuenow="0" 
 	        	aria-valuemin="0" 

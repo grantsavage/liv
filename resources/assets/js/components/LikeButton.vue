@@ -3,7 +3,7 @@
 		<a 
 		class="like-2" 
 		href="#" 
-		v-if="post.user.id != $root.user.id"
+		v-if="post.user.id != $root.user.id && !post.likedByCurrentUser"
 		@click.prevent="like">
 			<span 
 				:class="{hidden: this.liking}" 
@@ -34,6 +34,9 @@
 	import eventHub from '../event'
 	export default {
 		data() {
+
+			console.log(this.post.likedByCurrentUser)
+
 			return {
 				liking: false,
 				text: "Like",
@@ -54,7 +57,7 @@
 				this.text = "";
 
 				// Make request
-				this.$http.post('/posts/'+ this.post.id +'/likes').then((response) => {
+				this.$http.get('/posts/'+ this.post.id +'/likes').then((response) => {
 					// Emit event
 					eventHub.$emit('post-liked', this.post.id, true);
 

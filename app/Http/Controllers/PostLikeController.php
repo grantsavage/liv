@@ -42,11 +42,9 @@ class PostLikeController extends Controller
         // Broadcast and notify like to user
         $post->user->notify(new PostLiked($post,$request->user()));
 
-        dd($request->user());
-
-        if (Setting::get('pushNotifications','true',$request->user->id) != 'false') {
+        /*if (Setting::get('pushNotifications','true',$request->user->id) != 'false') {
             broadcast(new PostWasLiked($post, $request->user()))->toOthers();
-        }
+        }*/
 
         // Response
     	return response(null,200);
