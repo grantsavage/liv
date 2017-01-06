@@ -6,6 +6,7 @@
 			</a>
 		</div>
 		<div class="media-body">
+			
 			<a :href="'/user/' + post.user.username"><strong>{{ post.user.name }}</strong></a>
 
 			<div v-if="post.user.id == $root.user.id" class="dropdown pull-right post-dropdown">
@@ -35,7 +36,7 @@
 				:src="post.image_url" 
 				alt="" 
 				class="img-responsive time-image" 
-				style="max-width: 350px;max-height: 250;margin-bottom: 10px;" 
+				style="max-width: 70%;max-height: 100%;margin-bottom: 10px;" 
 				data-lity 
 				:data-lity-target="post.image_url"
 				@click="fixDropdown">
@@ -79,7 +80,7 @@
 	import eventHub from '../event.js'
 	import autosize from 'autosize'
 	export default {
-		
+
 		data() {
 			eventHub.$on("showCommentForm"+this.post.id, this.showCommentForm);
 
