@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Image;
 use Storage;
+use Input;
 use App\Post;
 use App\Media;
 use Carbon\Carbon; 
@@ -141,5 +142,9 @@ class PostController extends Controller
         $post->delete();
 
         return response()->json(["ok"=>true]);
+    }
+
+    public function upload(Request $request) {
+        dd($request->file("video"));
     }
 }

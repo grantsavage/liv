@@ -46,7 +46,7 @@
             <li v-if="notifications.length <= 0" class="dropdown-header text-center">No Notifications!</li>
             <li v-else class="dropdown-header text-center">Notifications</li>
             <li v-for="notification in notifications">
-                <a :href="'/post/' + notification.data.post.id"><img :src="notification.data.user.avatar" alt="" width="35" height="35"> {{notification.data.user.name}} liked your post.</a>
+                <a :href="'/post/' + notification.data.post.id"><img :src="notification.data.user.avatar" alt="" width="35" height="35"> <a :href="'/user/' + notification.data.user.username"><strong>{{notification.data.user.name}}</strong></a> liked your post.</a>
             </li>
 
         </ul>

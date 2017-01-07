@@ -9,7 +9,7 @@
 			
 			<a :href="'/user/' + post.user.username"><strong>{{ post.user.name }}</strong></a>
 
-			<div v-if="post.user.id == $root.user.id" class="dropdown pull-right post-dropdown">
+			<div v-if="post.user.id == $root.user.id" class="dropdown pull-right post-dropdown" style="z-index: 1000;">
 			    <button 
 			    	class="btn btn-default dropdown-toggle" 
 			    	:id="'post-menu-'+post.id" 
@@ -19,7 +19,7 @@
 			    		<span class="caret"></span>
 			    </button>
 
-			  	<ul class="dropdown-menu" :aria-labelledby="'post-menu-'+post.id" style="z-index: -1000">
+			  	<ul class="dropdown-menu" :aria-labelledby="'post-menu-'+post.id">
 			    	<li @click.prevent="postDelete">
 			    		<a style="color: #ED4F32" class="text-center post-delete" href="#">
 			    			Delete
@@ -36,7 +36,7 @@
 				:src="post.image_url" 
 				alt="" 
 				class="img-responsive time-image" 
-				style="max-width: 70%;max-height: 100%;margin-bottom: 10px;" 
+				style="max-width: 75%;max-height: 100%;margin-bottom: 10px;" 
 				data-lity 
 				:data-lity-target="post.image_url"
 				@click="fixDropdown">

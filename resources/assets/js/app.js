@@ -23,9 +23,10 @@ Vue.component('edit-profile', require('./components/EditProfile.vue'));
 Vue.component('profile', require('./components/Profile.vue'));
 Vue.component('nav-bar-notifications', require('./components/NavBarNotifications.vue'));
 Vue.component('search-bar-view', require('./components/SearchBarView.vue'));
-Vue.component('search-results-view', require('./components/SearchResultsView.vue'));
+//Vue.component('search-results-view', require('./components/SearchResultsView.vue'));
 Vue.component('settings', require('./components/Settings.vue'));
 Vue.component('reply', require('./components/Reply.vue'));
+Vue.component('upload', require('./components/Upload.vue'));
 
 const app = new Vue({
     el: '#app',

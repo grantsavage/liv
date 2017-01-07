@@ -68,7 +68,7 @@
 
         @yield('content')
         @if(!Auth::guest())
-        <search-results-view></search-results-view>
+        
         @endif
     </div>
     <!-- Scripts -->

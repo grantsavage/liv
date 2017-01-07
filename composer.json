@@ -10,7 +10,9 @@
         "pusher/pusher-php-server": "^2.6",
         "intervention/image": "^2.3",
         "grimthorr/laravel-user-settings": "^2.1",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "laravel/scout": "^2.0",
+        "algolia/algoliasearch-laravel": "^1.7"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

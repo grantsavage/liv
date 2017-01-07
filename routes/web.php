@@ -61,3 +61,8 @@ Route::post('/friends/delete/{username}', "FriendController@postDelete");
 // Post
 Route::get('/post/{id}', "PostController@viewPost");
 Route::delete('/post/{id}', "PostController@delete");
+
+Route::get('/upload', function() {
+	return view('upload');
+});
+Route::post('/upload', "PostController@upload");

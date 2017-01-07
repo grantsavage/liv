@@ -169,6 +169,7 @@ return [
 
         Intervention\Image\ImageServiceProvider::class,
         Grimthorr\LaravelUserSettings\ServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
 
         /*
          * Application Service Providers...

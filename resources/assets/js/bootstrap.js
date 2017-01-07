@@ -64,7 +64,6 @@ $(document).ready(function() {
 	/*
 	 * Shows loader on submit buttons on auth pages
 	 */
-
 	$("#authSubmitButton").click(function() {
 		if ($('.auth')[0].checkValidity()) {
 			$('.button-loader').removeClass('hidden');
@@ -83,6 +82,6 @@ $(document).ready(function() {
 	 * This returns the post dropdowns to the correct z-index after lightbox close
 	 */
 	$(document).on("lity:close", function() {
-		$(".post-dropdown").css("z-index","200");
+		$(".post-dropdown").css("z-index","1000");
 	});
 });
