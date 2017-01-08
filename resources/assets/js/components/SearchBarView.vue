@@ -39,7 +39,7 @@
 				displayKey: 'name',
 				templates: {
 					suggestion (suggestion) {
-						return "<img src='" + suggestion.avatar + "' width='30' height='30'/> &nbsp; <span>"+ suggestion._highlightResult.name.value +"</span><span class='pull-right'>" + suggestion.location + "</span>"
+						return "<img src='" + suggestion.avatar + "' width='30' height='30'/> &nbsp; <span>"+ suggestion._highlightResult.name.value +"</span><span class='pull-right' style='margin-top: 3px;'>" + suggestion.location + "</span>"
 					},
 					footer: "<span class='pull-right'>powered by <img src='/images/algolia.jpg' width='63' height='20'/> &nbsp; </span>",
 					empty: "<div>No Results</div>"

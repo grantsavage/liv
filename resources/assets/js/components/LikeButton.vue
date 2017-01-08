@@ -34,9 +34,6 @@
 	import eventHub from '../event'
 	export default {
 		data() {
-
-			console.log(this.post.likedByCurrentUser)
-
 			return {
 				liking: false,
 				text: "Like",
