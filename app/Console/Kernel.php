@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
         })->daily();
 
         $schedule->command('cache:clear')->daily();
+
+        $schedule->command("scout:import App\User")->everyMinute();
     }
 
     /**
