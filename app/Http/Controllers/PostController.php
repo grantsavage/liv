@@ -147,4 +147,6 @@ class PostController extends Controller
     public function upload(Request $request) {
         dd($request->file("video"));
     }
+
+    
 }
