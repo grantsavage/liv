@@ -65,8 +65,15 @@ class PostController extends Controller
             $imagePath = storage_path() . '/app/public/uploads/' . $name;
 
             // Create job to resize image
-            $job = (new ResizePostImage($imagePath));
-            dispatch($job);
+            // $job = (new ResizePostImage($imagePath));
+            // dispatch($job);
+
+            Image::make($imagePath)
+            ->resize(1080, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->encode('png',80)
+            ->save();
 
             // Set path equal to storage URL path
             $path = Storage::url($path);
@@ -147,6 +154,4 @@ class PostController extends Controller
     public function upload(Request $request) {
         dd($request->file("video"));
     }
-
-    
 }

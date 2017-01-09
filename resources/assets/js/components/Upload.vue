@@ -33,7 +33,7 @@
 				var form = new FormData();
 				this.file = document.getElementById('video').files[0];
 
-				form.append('video', this.file, 'video');
+				form.append('video', this.file);
 				//console.log(form.getAll());
 				this.$http.post('/upload', form, {
 
