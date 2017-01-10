@@ -191,6 +191,7 @@
 		},
 
 		mounted() {
+			var id = this.id
 			videojs("vjs"+id, 
                 {width: 450, 
                 autoplay: false, 
