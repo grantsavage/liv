@@ -191,20 +191,23 @@
 		},
 
 		mounted() {
-			var id = this.post.id
-			if (this.videoInitalized) {
-				videojs("vjs"+id).dispose()
-			}
-			videojs("vjs"+id, 
-                {width: 450, 
-                autoplay: false, 
-                preload: "auto", 
-                controls: true}, 
-                function() {
-                //
-            });
+			if (this.is_video) {
+				var id = this.post.id
+				if (this.videoInitalized) {
+					videojs("vjs"+id).dispose()
+				}
+				videojs("vjs"+id, 
+	                {width: 450, 
+	                autoplay: false, 
+	                preload: "auto", 
+	                controls: true}, 
+	                function() {
+	                //
+	            });
 
-            this.videoInitalized = true;
+	            this.videoInitalized = true;
+			}
+			
 		},
 
 		/*updated() {
