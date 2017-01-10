@@ -191,7 +191,7 @@
 		},
 
 		mounted() {
-			var id = this.id
+			var id = this.post.id
 			videojs("vjs"+id, 
                 {width: 450, 
                 autoplay: false, 
