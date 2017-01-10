@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
+    "file-loader": "^0.9.0",
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
     "laravel-echo": "^1.1.0",
@@ -15,6 +16,7 @@
     "lodash": "^4.16.2",
     "pluralize": "^3.0.0",
     "pusher-js": "^3.2.1",
+    "video.js": "^5.14.1",
     "vue": "^2.0.1",
     "vue-resource": "^1.0.3",
     "vue-template-compiler": "^2.1.4"
@@ -29,6 +31,7 @@
     "croppie": "^2.4.0",
     "lity": "^2.2.1",
     "push.js": "0.0.11",
-    "spinthatshit": "^1.0.3"
+    "spinthatshit": "^1.0.3",
+    "videojs-vtt.js": "^0.12.1"
   }
 }

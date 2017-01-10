@@ -45,44 +45,79 @@ class PostController extends Controller
     public function store(Request $request){
         // Validate request
         $this->validate($request, [
-            'body' => 'required',
+            'body' => 'required'
+            //"media" => "file|mimes:jpeg,bmp,png,mov,mp4"
         ]);     
 
         // Initially set path to null
         $path = null;
 
+        $isVideo = null;
+
         // Check if request has image
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('media')) {
+
+            $isVideo = true;
+
+            $ext = $request->file('media')->getClientOriginalExtension();
+
             // Generate name for image
-            $name = uniqid(true) . '.' . $request->file('image')->getClientOriginalExtension();
+            $name = uniqid(true) . '.' . $ext;
 
             // Store file and get storage path
-            $path = $request->file('image')->storeAs(
+            $path = $request->file('media')->storeAs(
                 'public/uploads', $name
             );
 
-            // Get image path
-            $imagePath = storage_path() . '/app/public/uploads/' . $name;
-
-            // Create job to resize image
-            // $job = (new ResizePostImage($imagePath));
-            // dispatch($job);
-
-            Image::make($imagePath)
-            ->resize(1080, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-            ->encode('png',80)
-            ->save();
-
-            // Set path equal to storage URL path
+            // Set the media path equal to storage URL path
             $path = Storage::url($path);
+
+            if ($ext == 'mp4' || $ext == 'mov') {
+                //
+            } else {
+                $isVideo = false;
+
+                // Get image path
+                $imagePath = storage_path() . '/app/public/uploads/' . $name;
+
+                // Create job to resize image
+                // $job = (new ResizePostImage($imagePath));
+                // dispatch($job);
+
+                Image::make($imagePath)
+                ->resize(1080, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->encode('png',80)
+                ->save();
+            }
+
+            // If the file is an image
+            /*if ($ext !== 'mov' || $ext !== 'mp4') {
+
+                $isVideo = false;
+
+                // Get image path
+                $imagePath = storage_path() . '/app/public/uploads/' . $name;
+
+                // Create job to resize image
+                // $job = (new ResizePostImage($imagePath));
+                // dispatch($job);
+
+                Image::make($imagePath)
+                ->resize(1080, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->encode('png',80)
+                ->save();
+            }*/
         }
 
         // Create the post
         $post = $request->user()->posts()->create([
             'body' => $request->body,
-            'image_url' => $path
+            'image_url' => $path,
+            'is_video' => $isVideo
         ]);
 
         // Broadcast Notification
@@ -94,7 +129,7 @@ class PostController extends Controller
 
     public function storeReply(Request $request, $postId) {
         $this->validate($request, [
-            "body" => "required"
+            "body" => "required",
         ]);
 
         $post = Post::notReply()->find($postId);

@@ -169,7 +169,7 @@
 							this.postHasImage = false;
 
 							// Alert user
-							swal({type: 'error',title: 'Uh oh...',text: "A problem occured while posting. The image you submitted may be too large. Try compressing the image and re-upload."});
+							swal({type: 'error',title: 'Uh oh...',text: "A problem occured while posting. The media you submitted may be too large. Try compressing the media and re-upload."});
 						}
 					});
 				}				

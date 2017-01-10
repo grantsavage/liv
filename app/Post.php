@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['body','image_url'];
+    protected $fillable = ['body','image_url','is_video'];
 
     protected $appends = ['likeCount', 'commentCount', 'likedByCurrentUser'];
 

@@ -65,4 +65,3 @@ Route::delete('/post/{id}', "PostController@delete");
 Route::get('/upload', function() {
 	return view('upload');
 });
-Route::post('/upload', "PostController@upload");

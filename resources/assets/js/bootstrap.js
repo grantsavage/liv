@@ -12,6 +12,8 @@ require('bootstrap-sass');
 require('bootstrap-sweetalert');
 require('croppie');
 require('lity');
+window.videojs = require('video.js');
+window.WebVTT = require('videojs-vtt.js').WebVTT
 //require('bootstrap-switch');
 
 /**

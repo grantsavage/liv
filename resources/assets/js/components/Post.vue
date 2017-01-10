@@ -32,14 +32,23 @@
 			<p>{{ post.body }}</p>
 
 			<img 
-				:class="{hidden: !post.image_url}" 
+				:class="{hidden: !post.image_url || post.is_video}" 
 				:src="post.image_url" 
 				alt="" 
 				class="img-responsive time-image" 
 				style="max-width: 75%;max-height: 100%;margin-bottom: 10px;" 
 				data-lity 
 				:data-lity-target="post.image_url"
-				@click="fixDropdown">
+				@click="fixDropdown"
+				v-if="!post.is_video">
+
+			<video
+				:src="post.image_url"
+				v-if="post.is_video && post.image_url"
+				class="video-js vjs-default-skin vjs"
+				style="margin-bottom: 10px;"
+				:id="'vjs' + post.id">
+			</video>
 				 
 			<p>
 				<like-button 
@@ -82,13 +91,12 @@
 	export default {
 
 		data() {
-			eventHub.$on("showCommentForm"+this.post.id, this.showCommentForm);
-
 			return {
 				comment: null,
 				commenting: false,
 				shouldShowComments: false,
-				shouldShowCommentForm: false
+				shouldShowCommentForm: false,
+				videoInitalized: false
 			}
 		},
 
@@ -143,7 +151,7 @@
 							$('html, body').animate({
 			                    scrollTop: ($('#reply'+replyId).offset().top - 300) + 'px'
 			                }, 2000);
-						}).bind(this);
+						});
 
 					}, (response) => {
 						this.commenting = false;
@@ -176,7 +184,39 @@
 			fixDropdown() {
 				$(".post-dropdown").css("z-index","-2000");
 			}
-		}
+		},
+
+		created() {
+			eventHub.$on("showCommentForm"+this.post.id, this.showCommentForm);
+		},
+
+		mounted() {
+			var id = this.post.id
+			if (this.videoInitalized) {
+				videojs("vjs"+id).dispose()
+			}
+			videojs("vjs"+id, 
+                {width: 450, 
+                autoplay: false, 
+                preload: "auto", 
+                controls: true}, 
+                function() {
+                //
+            });
+
+            this.videoInitalized = true;
+		},
+
+		/*updated() {
+			videojs("vjs"+this.post.id, 
+                        {width: 450, 
+                        autoplay: false, 
+                        preload: "auto", 
+                        controls: true}, 
+                        function() {
+                        //
+                });
+		}*/
 	}
 </script>
 

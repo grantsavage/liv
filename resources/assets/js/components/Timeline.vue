@@ -5,7 +5,8 @@
                 <div class="panel panel-default">
                     <!--<div class="panel-heading">Timeline</div>-->
                         <div class="panel-body">
-                            <post-form></post-form>
+                            <!--<post-form></post-form>-->
+                            <upload></upload>
                             <hr>
                             <post v-show="!loading" v-for="post in posts" :post="post"></post>
                             <div v-show="loading">
@@ -37,7 +38,7 @@
              * Method for adding post to timeline
              */
             addPost(post) {
-                this.posts.unshift(post)
+                this.posts.unshift(post);
             },
 
             /*
@@ -60,6 +61,7 @@
             deletePost(postId) {
                 for (var i = 0; i <= this.posts.length; i++) {
                     if (this.posts[i].id === postId) {
+
                         this.posts.splice(i,1);
 
                         break;
@@ -80,11 +82,11 @@
             /*
              * Reload the page when the event occurs
              */
-            reload(){ 
-                 this.$http.get('/posts').then((response) => {
+            reload(){
+                this.$http.get('/posts').then((response) => {
                     this.posts = response.body
                     this.loading = false;
-                });     
+                }); 
             },
         },
 
@@ -99,12 +101,11 @@
             // Event listener setup
             eventHub.$on('post-added', this.addPost);
             eventHub.$on('post-liked', this.likePost);
-            eventHub.$on('search',this.hideTimeline);
-            eventHub.$on('not-searching', this.showTimeline);
+            //eventHub.$on('search',this.hideTimeline);
+            //eventHub.$on('not-searching', this.showTimeline);
             eventHub.$on('reload-timeline', this.reload);
             eventHub.$on('postDelete', this.deletePost);
-            // Load the posts
             this.reload();
-        }
+        },
     }
 </script>
