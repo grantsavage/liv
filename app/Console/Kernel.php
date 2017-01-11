@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('cache:clear')->daily();
 
-        $schedule->command("scout:import App\User")->daily();
+        $schedule->command("scout:import 'App\User'")->daily();
     }
 
     /**
