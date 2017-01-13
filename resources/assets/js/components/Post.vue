@@ -46,7 +46,7 @@
 				:src="post.image_url"
 				v-if="post.is_video && post.image_url"
 				class="video-js vjs-default-skin vjs"
-				style="max-width: 75%;max-height: 100%;margin-bottom: 10px;" 
+				style="max-width: 75%;max-height: 100%;margin-bottom: 10px;width: 75%;" 
 				:id="'vjs' + post.id">
 			</video>
 				 
