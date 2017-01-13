@@ -46,7 +46,7 @@
 				:src="post.image_url"
 				v-if="post.is_video && post.image_url"
 				class="video-js vjs-default-skin vjs"
-				style="margin-bottom: 10px;"
+				style="max-width: 75%;max-height: 100%;margin-bottom: 10px;" 
 				:id="'vjs' + post.id">
 			</video>
 				 
@@ -193,7 +193,7 @@
 		mounted() {
 			var id = this.post.id
 			videojs("vjs"+id, 
-                {width: 450, 
+                { 
                 autoplay: false, 
                 preload: "auto", 
                 controls: true}, 
