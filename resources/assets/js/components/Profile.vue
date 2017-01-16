@@ -300,6 +300,18 @@
 
             // Check if friend
             this.checkFriend();
+
+            for (var i = $(".vjs").length - 1; i >= 0; i--) {
+                videojs($(".vjs")[i], 
+                    { 
+                        autoplay: false, 
+                        preload: "auto", 
+                        controls: true,
+                    }, 
+                    function() {
+                    //
+                }); 
+            }
 		}
 	}
 </script>

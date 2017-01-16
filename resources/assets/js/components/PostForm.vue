@@ -40,7 +40,7 @@
 		<p 
 			id="help" 
 			class="text-danger hidden">
-				Your post must have text in it to post
+				Your post must have text in it
 		</p>
 		<div class="progress hidden">
 	        <div 

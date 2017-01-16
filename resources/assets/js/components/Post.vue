@@ -49,7 +49,7 @@
 				<div class="videocontent">
 					<video
 						:src="post.image_url"
-						class="video-js vjs-default-skin vjs"
+						class="video-js vjs-default-skin vjs vjs-big-play-centered"
 						:id="'vjs' + post.id"
 						data-setup='{"fluid": true}'>
 					</video>
