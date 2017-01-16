@@ -41,15 +41,21 @@
 				:data-lity-target="post.image_url"
 				@click="fixDropdown"
 				v-if="!post.is_video">
-
-			<video
-				:src="post.image_url"
+			
+			<div 
+				class="wrapper" 
 				v-if="post.is_video && post.image_url"
-				class="video-js vjs-default-skin vjs"
-				style="max-width: 75%;max-height: 100%;margin-bottom: 10px;width: 75%;height: 150px;" 
-				:id="'vjs' + post.id">
-			</video>
-				 
+				style="max-width: 75%;">
+				<div class="videocontent">
+					<video
+						:src="post.image_url"
+						class="video-js vjs-default-skin vjs"
+						:id="'vjs' + post.id"
+						data-setup='{"fluid": true}'>
+					</video>
+				</div>
+			</div>
+
 			<p>
 				<like-button 
 				:post="post" 
@@ -96,7 +102,7 @@
 				commenting: false,
 				shouldShowComments: false,
 				shouldShowCommentForm: false,
-				videoInitalized: false
+				//videoInitalized: false
 			}
 		},
 
@@ -191,7 +197,7 @@
 		},
 
 		mounted() {
-			var id = this.post.id
+			/*var id = this.post.id
 			videojs("vjs"+id, 
                 { 
                 autoplay: false, 
@@ -201,7 +207,7 @@
                 //
             });
 
-            this.videoInitalized = true;
+            this.videoInitalized = true;*/
 		},
 
 		/*updated() {
