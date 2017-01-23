@@ -1,30 +1,38 @@
 <template>
 	<div class="container">
 		<div :class="{hidden: searching}" class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a 
-						:href="'/user/'+this.user.username" 
-						data-lity>
+					<div class="panel-heading text-center">
 							<img 
-							class="img-rounded" 
+							class="img-thumbnail" 
 							:src="this.user.avatar" 
 							alt="" 
-							width="128" 
-							height="128">
-						</a>
-						<h2 style=" display: inline-block;">
+							width="160" 
+							height="160">
+						<h2>
 							{{this.user.name}}
 						</h2>
 
+						<h4>
+							{{this.user.location}}
+						</h4>
+						<p>
+							{{this.user.bio}}
+						</p>
+						<a 
+						v-if="this.user.id == $root.user.id" 
+						href="/profile/edit"  
+						class="btn btn-primary">
+							Edit Profile
+						</a>
 
 						<div 
 						@click="addFriend" 
 						:class="{'hidden' : awaitingAccept || isFriend || this.user.id == $root.user.id, 'btn-primary' : !isFriend, 'btn-success' : friendRequestSent, 'disabled' : friendRequestSent || sendingFriendRequest}" 
 						class="btn" 
 						id="requestButton" 
-						style="display: inline-block;margin-left: 20px;">
+						style="display: inline-block;">
 						<span 
 						:class="{'hidden' : isFriend || friendRequestSent || sendingFriendRequest}" 
 						class="glyphicon glyphicon-plus">		
@@ -44,7 +52,7 @@
 						<div 
 						@click="deleteFriend" 
 						class="btn btn-danger" 
-						style="display: inline-block;margin-left: 20px;" 
+						style="display: inline-block;" 
 						:class="{'hidden' : awaitingAccept || friendRequestSent || !isFriend || this.user.id == $root.user.id, 'disabled' : deletingFriend}">
 						<span 
 						class="glyphicon glyphicon-remove"></span>
@@ -62,7 +70,7 @@
 						:class="{'hidden' : !awaitingAccept || this.user.id == $root.user.id, 'disabled' : accepting || friendAdded}" 
 						class="btn btn-success" 
 						id="acceptButton" 
-						style="display: inline-block;margin-left: 20px;">
+						style="display: inline-block;">
 						<span 
 						:class="" 
 						class="glyphicon glyphicon-ok">		
@@ -73,25 +81,6 @@
 						:class="{'hidden' : !accepting}"
 						style="display: inline-block;"></div>
 						</div>
-
-
-						<a 
-						v-if="this.user.id == $root.user.id" 
-						href="/profile/edit" 
-						style="margin: 20px; display: inline-block;" 
-						class="btn btn-primary pull-right">
-							Edit Profile
-						</a>
-						<br>
-						<br>
-						<p 
-						class="lead" 
-						style="display: inline-block;">
-							{{this.user.location}}
-						</p>
-						<p>
-							{{this.user.bio}}
-						</p>
 					</div>
 					<div class="panel-body">
 						<post v-for="post in this.user.posts" :post="post"></post>
