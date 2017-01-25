@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','email','avatar_url','settings'
+        'password', 'remember_token','email','avatar_url','settings','created_at','updated_at'
     ];
 
     /*
@@ -91,14 +91,18 @@ class User extends Authenticatable
      * Determines if friend requests are pending
      */
     public function hasFriendRequestPending(User $user) {
-        return $this->friendRequestsPending()->where('id', $user->id)->count();
+        $value = $this->friendRequestsPending()->where('id', $user->id)->count();
+        $this->requestPending = $value;
+        return $value;
     }
 
     /*
      * Determines if friend request is received
      */
     public function hasFriendRequestReceived(User $user) {
-        return $this->friendRequests()->where('id', $user->id)->count();
+        $value = $this->friendRequests()->where('id', $user->id)->count();
+        $this->waitingAccept = $value;
+        return $value;
     }
 
     /*
@@ -136,6 +140,8 @@ class User extends Authenticatable
      * Determines if friend is friend with another user
      */
     public function isFriendsWith(User $user) {
-        return (bool) $this->friends()->where('id', $user->id)->count();
+        $value = (bool) $this->friends()->where('id', $user->id)->count();
+        $this->isFriend = $value;
+        return $value;
     }
 }

@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
-        "pusher/pusher-php-server": "^2.6",
+        "laravel/framework": "5.4.*",
+        "pusher/pusher-php-server": "2.6.3",
         "intervention/image": "^2.3",
         "grimthorr/laravel-user-settings": "^2.1",
         "doctrine/dbal": "^2.5",

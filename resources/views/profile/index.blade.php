@@ -2,8 +2,7 @@
 
 @section('content')
 	<profile 
-		:user="{{ $user }}" 
-		:friends="{{Auth::user()->friends()}}" 
-		:requests="{{Auth::user()->friendRequests()}}">
+		:user="{{ $user }}"
+	>
 	</profile>
 @endsection

@@ -13,7 +13,6 @@
 						<h2>
 							{{this.user.name}}
 						</h2>
-
 						<h4>
 							{{this.user.location}}
 						</h4>
@@ -115,7 +114,7 @@
 			}
 		},
 
-		props: ['user','friends','requests'],
+		props: ['user'],
 
 		components: [
 			Post
@@ -138,26 +137,43 @@
 			 */
 			checkFriend(){
 				// Check if friend
-				for (var i = 0; i < this.friends.length; i++) {
+				this.isFriend = this.user.isFriend;
+
+				if (this.user.isFriend) {
+					this.isFriend = true;
+					this.buttonText = "Delete Friend"
+				}
+
+				/*for (var i = 0; i < this.friends.length; i++) {
 					if(this.friends[i].id == this.user.id) {
 						this.isFriend = true;
 						this.buttonText = "Delete Friend"
 					}
-				}
+				}*/
 
 				// Check if request is pending
-				for (var i = 0; i < this.requests.length; i++) {
+				/*for (var i = 0; i < this.requests.length; i++) {
 
 					// If the user is a request
-					if(this.requests[i].id == this.user.id) {
+					if(/*this.requests[i].id == this.user.id this.user.requestPending) {
 						this.friendRequestSent = true;
 						this.buttonText = "Request Pending"
 					}
 
-					if (this.requests[i].pivot.user_id != this.user.id) {
+					if (/*this.requests[i].pivot.user_id != this.user.id this.user.waitingAccept) {
 						this.awaitingAccept = true;
 						this.buttonText = "Accept Request";
 					}
+				}*/
+
+				if(this.user.requestPending != 0) {
+					this.friendRequestSent = true;
+					this.buttonText = "Request Pending"
+				}
+
+				if (this.user.waitingAccept != 0) {
+					this.awaitingAccept = true;
+					this.buttonText = "Accept Request";
 				}
 			},
 

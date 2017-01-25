@@ -39,6 +39,15 @@ class ProfileController extends Controller
         // Attach user object to each post
         $user->posts->load(['user']);
 
+        // Check if friend
+        $user->isFriendsWith($request->user());
+
+        // Check if request is pending
+        $user->hasFriendRequestPending($request->user());
+
+        // Check if awaiting accept
+        $user->hasFriendRequestReceived($request->user());
+
         // If we're trying to load the user's info from ajax
         if ($request->wantsJson()) {
 
